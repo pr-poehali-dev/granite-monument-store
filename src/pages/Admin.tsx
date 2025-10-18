@@ -1,9 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
+import { Card, CardContent } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
 import Icon from '@/components/ui/icon';
 import {
@@ -13,13 +10,9 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+import ProductCard from '@/components/admin/ProductCard';
+import ProductForm from '@/components/admin/ProductForm';
+import FileUploadSection from '@/components/admin/FileUploadSection';
 
 const API_URL = 'https://functions.poehali.dev/4ae8f9dd-7d22-451b-a800-1c1d18383264';
 
@@ -263,47 +256,11 @@ export default function Admin() {
 
       <div className="container mx-auto px-4 py-8">
         <div className="grid gap-6 mb-8">
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Icon name="Upload" size={24} />
-                Быстрая загрузка
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="flex gap-4">
-                <div className="flex-1">
-                  <Label htmlFor="excel-file" className="cursor-pointer">
-                    <div className="border-2 border-dashed border-primary rounded-lg p-8 text-center hover:bg-accent/5 transition-colors">
-                      <Icon name="FileSpreadsheet" size={48} className="mx-auto mb-4 text-primary" />
-                      <p className="text-lg font-semibold mb-2">Загрузить Excel файл</p>
-                      <p className="text-sm text-muted-foreground">
-                        Поддерживается .xlsx формат
-                      </p>
-                      <Input
-                        id="excel-file"
-                        type="file"
-                        accept=".xlsx,.xls"
-                        onChange={handleFileUpload}
-                        className="hidden"
-                        disabled={loading}
-                      />
-                    </div>
-                  </Label>
-                </div>
-              </div>
-              <div className="flex gap-4">
-                <Button onClick={downloadTemplate} variant="outline">
-                  <Icon name="Download" size={20} className="mr-2" />
-                  Скачать шаблон
-                </Button>
-              </div>
-              <div className="text-sm text-muted-foreground">
-                <p className="font-semibold mb-2">Формат Excel файла:</p>
-                <p>Столбцы: Название | Категория | Форма | Размер | Габариты | Материал | Цена | Описание | URL изображения</p>
-              </div>
-            </CardContent>
-          </Card>
+          <FileUploadSection
+            loading={loading}
+            onFileUpload={handleFileUpload}
+            onDownloadTemplate={downloadTemplate}
+          />
 
           <div className="flex justify-between items-center">
             <h2 className="text-2xl font-bold">Товары ({products.length})</h2>
@@ -323,123 +280,17 @@ export default function Admin() {
                     {editingProduct ? 'Редактировать товар' : 'Добавить товар'}
                   </DialogTitle>
                 </DialogHeader>
-                <form onSubmit={handleSubmit} className="space-y-4">
-                  <div>
-                    <Label htmlFor="name">Название *</Label>
-                    <Input
-                      id="name"
-                      value={formData.name}
-                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      required
-                    />
-                  </div>
-
-                  <div>
-                    <Label htmlFor="category">Категория *</Label>
-                    <Select
-                      value={formData.category}
-                      onValueChange={(value) => setFormData({ ...formData, category: value })}
-                    >
-                      <SelectTrigger>
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="standard">Стандартные</SelectItem>
-                        <SelectItem value="premium">Премиум</SelectItem>
-                        <SelectItem value="exclusive">Эксклюзивные</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <Label htmlFor="shape">Форма</Label>
-                      <Input
-                        id="shape"
-                        value={formData.shape}
-                        onChange={(e) => setFormData({ ...formData, shape: e.target.value })}
-                        placeholder="classic, arch, rounded"
-                      />
-                    </div>
-                    <div>
-                      <Label htmlFor="size">Размер</Label>
-                      <Input
-                        id="size"
-                        value={formData.size}
-                        onChange={(e) => setFormData({ ...formData, size: e.target.value })}
-                        placeholder="small, medium, large"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <Label htmlFor="dimensions">Габариты</Label>
-                      <Input
-                        id="dimensions"
-                        value={formData.dimensions}
-                        onChange={(e) => setFormData({ ...formData, dimensions: e.target.value })}
-                        placeholder="100x50x5 см"
-                      />
-                    </div>
-                    <div>
-                      <Label htmlFor="material">Материал</Label>
-                      <Input
-                        id="material"
-                        value={formData.material}
-                        onChange={(e) => setFormData({ ...formData, material: e.target.value })}
-                        placeholder="black-granite, gray-granite"
-                      />
-                    </div>
-                  </div>
-
-                  <div>
-                    <Label htmlFor="price">Цена (₽) *</Label>
-                    <Input
-                      id="price"
-                      type="number"
-                      value={formData.price}
-                      onChange={(e) => setFormData({ ...formData, price: e.target.value })}
-                      required
-                    />
-                  </div>
-
-                  <div>
-                    <Label htmlFor="description">Описание</Label>
-                    <Textarea
-                      id="description"
-                      value={formData.description}
-                      onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                      rows={3}
-                    />
-                  </div>
-
-                  <div>
-                    <Label htmlFor="image_url">URL изображения</Label>
-                    <Input
-                      id="image_url"
-                      value={formData.image_url}
-                      onChange={(e) => setFormData({ ...formData, image_url: e.target.value })}
-                      placeholder="https://example.com/image.jpg"
-                    />
-                  </div>
-
-                  <div className="flex gap-4">
-                    <Button type="submit" disabled={loading} className="flex-1">
-                      {loading ? 'Сохранение...' : editingProduct ? 'Обновить' : 'Создать'}
-                    </Button>
-                    <Button
-                      type="button"
-                      variant="outline"
-                      onClick={() => {
-                        resetForm();
-                        setIsDialogOpen(false);
-                      }}
-                    >
-                      Отмена
-                    </Button>
-                  </div>
-                </form>
+                <ProductForm
+                  formData={formData}
+                  isEditing={!!editingProduct}
+                  loading={loading}
+                  onSubmit={handleSubmit}
+                  onCancel={() => {
+                    resetForm();
+                    setIsDialogOpen(false);
+                  }}
+                  onChange={setFormData}
+                />
               </DialogContent>
             </Dialog>
           </div>
@@ -463,59 +314,12 @@ export default function Admin() {
         ) : (
           <div className="grid gap-4">
             {products.map((product) => (
-              <Card key={product.id}>
-                <CardContent className="p-6">
-                  <div className="flex gap-6">
-                    {product.image_url && (
-                      <img
-                        src={product.image_url}
-                        alt={product.name}
-                        className="w-32 h-32 object-cover rounded-lg"
-                      />
-                    )}
-                    <div className="flex-1">
-                      <div className="flex justify-between items-start mb-2">
-                        <div>
-                          <h3 className="text-xl font-semibold">{product.name}</h3>
-                          <p className="text-sm text-muted-foreground">
-                            Категория: {product.category}
-                          </p>
-                        </div>
-                        <p className="text-2xl font-bold text-accent">
-                          {product.price.toLocaleString()} ₽
-                        </p>
-                      </div>
-                      <div className="grid grid-cols-2 gap-2 text-sm mb-3">
-                        {product.shape && <p>Форма: {product.shape}</p>}
-                        {product.size && <p>Размер: {product.size}</p>}
-                        {product.dimensions && <p>Габариты: {product.dimensions}</p>}
-                        {product.material && <p>Материал: {product.material}</p>}
-                      </div>
-                      {product.description && (
-                        <p className="text-sm text-muted-foreground mb-4">{product.description}</p>
-                      )}
-                      <div className="flex gap-2">
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          onClick={() => handleEdit(product)}
-                        >
-                          <Icon name="Pencil" size={16} className="mr-2" />
-                          Редактировать
-                        </Button>
-                        <Button
-                          variant="destructive"
-                          size="sm"
-                          onClick={() => handleDelete(product.id)}
-                        >
-                          <Icon name="Trash2" size={16} className="mr-2" />
-                          Удалить
-                        </Button>
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
+              <ProductCard
+                key={product.id}
+                product={product}
+                onEdit={handleEdit}
+                onDelete={handleDelete}
+              />
             ))}
           </div>
         )}
