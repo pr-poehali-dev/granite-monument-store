@@ -276,67 +276,140 @@ export default function Index() {
           <h2 className="text-5xl font-bold text-center mb-4">Каталог</h2>
           <p className="text-center text-muted-foreground mb-12 text-lg">Готовые решения для разных бюджетов</p>
           
-          <Tabs defaultValue="standard" className="max-w-5xl mx-auto">
-            <TabsList className="grid w-full grid-cols-3 mb-8">
-              <TabsTrigger value="standard">Стандартные</TabsTrigger>
-              <TabsTrigger value="premium">Премиум</TabsTrigger>
-              <TabsTrigger value="exclusive">Эксклюзивные</TabsTrigger>
+          <Tabs defaultValue="vertical-simple" className="max-w-6xl mx-auto">
+            <TabsList className="grid w-full grid-cols-6 mb-8">
+              <TabsTrigger value="vertical-simple">Вертикальные</TabsTrigger>
+              <TabsTrigger value="horizontal-simple">Горизонтальные</TabsTrigger>
+              <TabsTrigger value="vertical-carved">Резные верт.</TabsTrigger>
+              <TabsTrigger value="horizontal-carved">Резные гориз.</TabsTrigger>
+              <TabsTrigger value="cross">Кресты</TabsTrigger>
+              <TabsTrigger value="angel">Ангелы</TabsTrigger>
             </TabsList>
             
-            <TabsContent value="standard" className="space-y-4">
+            <TabsContent value="vertical-simple" className="grid md:grid-cols-2 gap-6">
               {[
-                { name: 'Памятник "Классика"', price: '25 000', desc: 'Чёрный гранит, 100×50×5 см, стандартная гравировка' },
-                { name: 'Памятник "Арка"', price: '30 000', desc: 'Серый гранит, 110×55×5 см, арочная форма' },
+                { name: 'Вертикальный "Классика 1"', price: '25 000', desc: 'Чёрный гранит, 100×50×5 см' },
+                { name: 'Вертикальный "Классика 2"', price: '35 000', desc: 'Чёрный гранит, 120×60×8 см' },
+                { name: 'Вертикальный "Элегант"', price: '28 000', desc: 'Серый гранит, 110×55×5 см' },
+                { name: 'Вертикальный "Арка"', price: '30 000', desc: 'Чёрный гранит, арочная форма' },
+                { name: 'Вертикальный "Стандарт 1"', price: '18 000', desc: 'Серый гранит, 80×40×5 см' },
+                { name: 'Вертикальный "Премиум"', price: '42 000', desc: 'Чёрный гранит премиум, 120×60×8 см' },
               ].map((item) => (
-                <Card key={item.name}>
-                  <CardContent className="p-6 flex justify-between items-center">
-                    <div>
-                      <h3 className="text-xl font-semibold mb-1">{item.name}</h3>
-                      <p className="text-muted-foreground">{item.desc}</p>
-                    </div>
-                    <div className="text-right">
+                <Card key={item.name} className="hover:shadow-lg transition-shadow">
+                  <CardContent className="p-6">
+                    <h3 className="text-xl font-semibold mb-2">{item.name}</h3>
+                    <p className="text-muted-foreground mb-4">{item.desc}</p>
+                    <div className="flex justify-between items-center">
                       <p className="text-2xl font-bold text-accent">{item.price} ₽</p>
-                      <Button className="mt-2">Заказать</Button>
+                      <Button>Заказать</Button>
                     </div>
                   </CardContent>
                 </Card>
               ))}
             </TabsContent>
             
-            <TabsContent value="premium" className="space-y-4">
+            <TabsContent value="horizontal-simple" className="grid md:grid-cols-2 gap-6">
               {[
-                { name: 'Памятник "Элегант"', price: '50 000', desc: 'Карельский гранит, 120×60×8 см, портретная гравировка' },
-                { name: 'Памятник "Достоинство"', price: '65 000', desc: 'Красный гранит, 130×65×8 см, резная композиция' },
+                { name: 'Горизонтальный "Классика 1"', price: '25 000', desc: 'Чёрный гранит, 50×100×5 см' },
+                { name: 'Горизонтальный "Классика 2"', price: '35 000', desc: 'Чёрный гранит, 60×120×8 см' },
+                { name: 'Горизонтальный "Элегант"', price: '28 000', desc: 'Серый гранит, 55×110×5 см' },
+                { name: 'Горизонтальный "Арка"', price: '30 000', desc: 'Чёрный гранит, арочная форма' },
+                { name: 'Горизонтальный "Стандарт 1"', price: '18 000', desc: 'Серый гранит, 40×80×5 см' },
+                { name: 'Горизонтальный "Премиум"', price: '42 000', desc: 'Чёрный гранит премиум, 60×120×8 см' },
               ].map((item) => (
-                <Card key={item.name}>
-                  <CardContent className="p-6 flex justify-between items-center">
-                    <div>
-                      <h3 className="text-xl font-semibold mb-1">{item.name}</h3>
-                      <p className="text-muted-foreground">{item.desc}</p>
-                    </div>
-                    <div className="text-right">
+                <Card key={item.name} className="hover:shadow-lg transition-shadow">
+                  <CardContent className="p-6">
+                    <h3 className="text-xl font-semibold mb-2">{item.name}</h3>
+                    <p className="text-muted-foreground mb-4">{item.desc}</p>
+                    <div className="flex justify-between items-center">
                       <p className="text-2xl font-bold text-accent">{item.price} ₽</p>
-                      <Button className="mt-2">Заказать</Button>
+                      <Button>Заказать</Button>
                     </div>
                   </CardContent>
                 </Card>
               ))}
             </TabsContent>
-            
-            <TabsContent value="exclusive" className="space-y-4">
+
+            <TabsContent value="vertical-carved" className="grid md:grid-cols-2 gap-6">
               {[
-                { name: 'Памятник "Вечность"', price: '100 000', desc: 'Габбро-диабаз, 150×70×10 см, объёмная композиция' },
-                { name: 'Индивидуальный проект', price: 'от 150 000', desc: 'Разработка уникального дизайна по вашим эскизам' },
+                { name: 'Резной "Цветы 1"', price: '45 000', desc: 'Чёрный гранит с резной гравировкой цветов' },
+                { name: 'Резной "Розы"', price: '55 000', desc: 'Чёрный гранит, 120×60×8 см, резные розы' },
+                { name: 'Резной "Лилии"', price: '48 000', desc: 'Серый гранит с гравировкой лилий' },
+                { name: 'Резной "Орнамент"', price: '47 000', desc: 'Красный гранит с резным орнаментом' },
+                { name: 'Резной "Ангел"', price: '65 000', desc: 'Чёрный гранит с изображением ангела' },
+                { name: 'Резной "Элитный"', price: '75 000', desc: 'Чёрный гранит, комплексная резьба' },
               ].map((item) => (
-                <Card key={item.name}>
-                  <CardContent className="p-6 flex justify-between items-center">
-                    <div>
-                      <h3 className="text-xl font-semibold mb-1">{item.name}</h3>
-                      <p className="text-muted-foreground">{item.desc}</p>
-                    </div>
-                    <div className="text-right">
+                <Card key={item.name} className="hover:shadow-lg transition-shadow">
+                  <CardContent className="p-6">
+                    <h3 className="text-xl font-semibold mb-2">{item.name}</h3>
+                    <p className="text-muted-foreground mb-4">{item.desc}</p>
+                    <div className="flex justify-between items-center">
                       <p className="text-2xl font-bold text-accent">{item.price} ₽</p>
-                      <Button className="mt-2">Заказать</Button>
+                      <Button>Заказать</Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </TabsContent>
+
+            <TabsContent value="horizontal-carved" className="grid md:grid-cols-2 gap-6">
+              {[
+                { name: 'Резной "Цветы 1"', price: '45 000', desc: 'Чёрный гранит с резной гравировкой цветов' },
+                { name: 'Резной "Розы"', price: '55 000', desc: 'Чёрный гранит, 60×120×8 см, резные розы' },
+                { name: 'Резной "Лилии"', price: '48 000', desc: 'Серый гранит с гравировкой лилий' },
+                { name: 'Резной "Орнамент"', price: '47 000', desc: 'Красный гранит с резным орнаментом' },
+                { name: 'Резной "Ангел"', price: '65 000', desc: 'Чёрный гранит с изображением ангела' },
+                { name: 'Резной "Элитный"', price: '75 000', desc: 'Чёрный гранит, комплексная резьба' },
+              ].map((item) => (
+                <Card key={item.name} className="hover:shadow-lg transition-shadow">
+                  <CardContent className="p-6">
+                    <h3 className="text-xl font-semibold mb-2">{item.name}</h3>
+                    <p className="text-muted-foreground mb-4">{item.desc}</p>
+                    <div className="flex justify-between items-center">
+                      <p className="text-2xl font-bold text-accent">{item.price} ₽</p>
+                      <Button>Заказать</Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </TabsContent>
+
+            <TabsContent value="cross" className="grid md:grid-cols-2 gap-6">
+              {[
+                { name: 'Крест "Православный 1"', price: '35 000', desc: 'Чёрный гранит, 120×60×8 см' },
+                { name: 'Крест "Православный 2"', price: '45 000', desc: 'Чёрный гранит, 150×70×10 см' },
+                { name: 'Крест "Католический"', price: '38 000', desc: 'Серый гранит, 130×65×8 см' },
+                { name: 'Крест "Резной"', price: '55 000', desc: 'Чёрный гранит с резным орнаментом' },
+                { name: 'Крест "Элитный"', price: '65 000', desc: 'Чёрный гранит, комплексная резьба' },
+              ].map((item) => (
+                <Card key={item.name} className="hover:shadow-lg transition-shadow">
+                  <CardContent className="p-6">
+                    <h3 className="text-xl font-semibold mb-2">{item.name}</h3>
+                    <p className="text-muted-foreground mb-4">{item.desc}</p>
+                    <div className="flex justify-between items-center">
+                      <p className="text-2xl font-bold text-accent">{item.price} ₽</p>
+                      <Button>Заказать</Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </TabsContent>
+
+            <TabsContent value="angel" className="grid md:grid-cols-2 gap-6">
+              {[
+                { name: 'Ангел "Скорбящий"', price: '85 000', desc: 'Чёрный гранит, 150×80×40 см' },
+                { name: 'Ангел "Молящийся"', price: '75 000', desc: 'Серый гранит, 140×70×35 см' },
+                { name: 'Ангел "Хранитель"', price: '95 000', desc: 'Чёрный гранит, 160×85×45 см' },
+                { name: 'Ангел "Детский"', price: '55 000', desc: 'Серый гранит, 100×50×30 см' },
+                { name: 'Ангел "Элитный"', price: '120 000', desc: 'Чёрный гранит, 180×90×50 см' },
+              ].map((item) => (
+                <Card key={item.name} className="hover:shadow-lg transition-shadow">
+                  <CardContent className="p-6">
+                    <h3 className="text-xl font-semibold mb-2">{item.name}</h3>
+                    <p className="text-muted-foreground mb-4">{item.desc}</p>
+                    <div className="flex justify-between items-center">
+                      <p className="text-2xl font-bold text-accent">{item.price} ₽</p>
+                      <Button>Заказать</Button>
                     </div>
                   </CardContent>
                 </Card>
