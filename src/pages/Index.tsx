@@ -6,9 +6,15 @@ import Icon from '@/components/ui/icon';
 
 export default function Index() {
   const [activeSection, setActiveSection] = useState('home');
+  const [selectedOrientation, setSelectedOrientation] = useState('vertical');
   const [selectedShape, setSelectedShape] = useState('classic');
   const [selectedSize, setSelectedSize] = useState('medium');
   const [selectedMaterial, setSelectedMaterial] = useState('black-granite');
+
+  const monumentOrientations = [
+    { id: 'vertical', name: 'Вертикальные', icon: 'RectangleVertical' },
+    { id: 'horizontal', name: 'Горизонтальные', icon: 'RectangleHorizontal' },
+  ];
 
   const monumentShapes = [
     { id: 'classic', name: 'Классическая', icon: 'Square' },
@@ -104,6 +110,26 @@ export default function Index() {
           <div className="grid md:grid-cols-2 gap-12 max-w-6xl mx-auto">
             <div className="space-y-8 animate-fade-in">
               <div>
+                <h3 className="text-2xl font-semibold mb-4">Ориентация</h3>
+                <div className="grid grid-cols-2 gap-4">
+                  {monumentOrientations.map((orientation) => (
+                    <Card 
+                      key={orientation.id}
+                      className={`cursor-pointer transition-all hover:shadow-lg ${
+                        selectedOrientation === orientation.id ? 'ring-2 ring-accent' : ''
+                      }`}
+                      onClick={() => setSelectedOrientation(orientation.id)}
+                    >
+                      <CardContent className="p-6 text-center">
+                        <Icon name={orientation.icon} size={48} className="mx-auto mb-3 text-primary" />
+                        <p className="font-medium">{orientation.name}</p>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              </div>
+
+              <div>
                 <h3 className="text-2xl font-semibold mb-4">Форма памятника</h3>
                 <div className="grid grid-cols-2 gap-4">
                   {monumentShapes.map((shape) => (
@@ -186,13 +212,20 @@ export default function Index() {
                         selectedShape === 'rounded' ? 'rounded-3xl' :
                         'clip-path-cross'
                       } ${
-                        selectedSize === 'small' ? 'w-32 h-48' :
-                        selectedSize === 'medium' ? 'w-40 h-56' :
-                        'w-48 h-64'
-                      } shadow-xl`}
+                        selectedOrientation === 'vertical' 
+                          ? selectedSize === 'small' ? 'w-32 h-48' :
+                            selectedSize === 'medium' ? 'w-40 h-56' :
+                            'w-48 h-64'
+                          : selectedSize === 'small' ? 'w-48 h-32' :
+                            selectedSize === 'medium' ? 'w-56 h-40' :
+                            'w-64 h-48'
+                      } shadow-xl transition-all duration-300`}
                     />
                   </div>
                   <div className="space-y-3 text-center">
+                    <p className="text-lg">
+                      <span className="font-semibold">Ориентация:</span> {monumentOrientations.find(o => o.id === selectedOrientation)?.name}
+                    </p>
                     <p className="text-lg">
                       <span className="font-semibold">Форма:</span> {monumentShapes.find(s => s.id === selectedShape)?.name}
                     </p>
