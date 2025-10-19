@@ -1,7 +1,9 @@
+import { useState, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
+import Icon from '@/components/ui/icon';
 import {
   Select,
   SelectContent,
@@ -39,6 +41,40 @@ export default function ProductForm({
   onCancel,
   onChange,
 }: ProductFormProps) {
+  const [uploadingImage, setUploadingImage] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setUploadingImage(true);
+    
+    try {
+      const formDataUpload = new FormData();
+      formDataUpload.append('file', file);
+
+      const response = await fetch('https://api.poehali.dev/upload', {
+        method: 'POST',
+        body: formDataUpload,
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        const imageUrl = data.url;
+        
+        onChange({ ...formData, image_url: imageUrl });
+      } else {
+        alert('Ошибка загрузки изображения');
+      }
+    } catch (error) {
+      console.error('Upload error:', error);
+      alert('Ошибка загрузки изображения');
+    } finally {
+      setUploadingImage(false);
+    }
+  };
+
   return (
     <form onSubmit={onSubmit} className="space-y-4">
       <div>
@@ -132,13 +168,65 @@ export default function ProductForm({
       </div>
 
       <div>
-        <Label htmlFor="image_url">URL изображения</Label>
-        <Input
-          id="image_url"
-          value={formData.image_url}
-          onChange={(e) => onChange({ ...formData, image_url: e.target.value })}
-          placeholder="https://example.com/image.jpg"
-        />
+        <Label>Фото памятника</Label>
+        <div className="mt-2 space-y-3">
+          {formData.image_url && (
+            <div className="aspect-[3/4] bg-white border rounded-lg flex items-center justify-center p-4">
+              <img src={formData.image_url} alt="Preview" className="w-full h-full object-contain" />
+            </div>
+          )}
+          
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="image/*"
+            capture="environment"
+            onChange={handleImageUpload}
+            className="hidden"
+          />
+          
+          <div className="flex gap-2">
+            <Button
+              type="button"
+              variant="outline"
+              className="flex-1"
+              onClick={() => fileInputRef.current?.click()}
+              disabled={uploadingImage || loading}
+            >
+              {uploadingImage ? (
+                <>
+                  <Icon name="Loader2" size={20} className="mr-2 animate-spin" />
+                  Загрузка...
+                </>
+              ) : (
+                <>
+                  <Icon name="Camera" size={20} className="mr-2" />
+                  {formData.image_url ? 'Изменить фото' : 'Загрузить фото'}
+                </>
+              )}
+            </Button>
+            
+            {formData.image_url && (
+              <Button
+                type="button"
+                variant="ghost"
+                size="icon"
+                onClick={() => onChange({ ...formData, image_url: '' })}
+                disabled={loading}
+              >
+                <Icon name="Trash2" size={20} />
+              </Button>
+            )}
+          </div>
+          
+          <Input
+            id="image_url"
+            value={formData.image_url}
+            onChange={(e) => onChange({ ...formData, image_url: e.target.value })}
+            placeholder="Или вставьте URL изображения"
+            className="text-sm"
+          />
+        </div>
       </div>
 
       <div className="flex gap-4">
