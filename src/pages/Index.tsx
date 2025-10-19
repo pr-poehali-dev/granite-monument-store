@@ -286,194 +286,148 @@ export default function Index() {
               <TabsTrigger value="angel" className="text-xs md:text-sm">Ангелы</TabsTrigger>
             </TabsList>
             
-            <TabsContent value="vertical-simple" className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+            <TabsContent value="vertical-simple" className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
               {[
-                { name: 'Вертикальный "Классика 1"', price: '25 000', desc: 'Чёрный гранит, 100×50×5 см', material: 'black-granite', shape: 'classic' },
-                { name: 'Вертикальный "Классика 2"', price: '35 000', desc: 'Чёрный гранит, 120×60×8 см', material: 'black-granite', shape: 'classic' },
-                { name: 'Вертикальный "Элегант"', price: '28 000', desc: 'Серый гранит, 110×55×5 см', material: 'gray-granite', shape: 'rounded' },
-                { name: 'Вертикальный "Арка"', price: '30 000', desc: 'Чёрный гранит, арочная форма', material: 'black-granite', shape: 'arch' },
-                { name: 'Вертикальный "Стандарт 1"', price: '18 000', desc: 'Серый гранит, 80×40×5 см', material: 'gray-granite', shape: 'classic' },
-                { name: 'Вертикальный "Премиум"', price: '42 000', desc: 'Чёрный гранит премиум, 120×60×8 см', material: 'black-granite', shape: 'rounded' },
+                { name: 'Классика 1', price: '25 000', desc: '100×50×5 см', material: 'black-granite', shape: 'classic', img: 'https://cdn.poehali.dev/files/80ba5171-c4d0-4a59-b1f5-94ce93004d06.png' },
+                { name: 'Классика 2', price: '35 000', desc: '120×60×8 см', material: 'black-granite', shape: 'classic', img: 'https://cdn.poehali.dev/files/80ba5171-c4d0-4a59-b1f5-94ce93004d06.png' },
+                { name: 'Элегант', price: '28 000', desc: '110×55×5 см', material: 'gray-granite', shape: 'rounded', img: 'https://cdn.poehali.dev/files/80ba5171-c4d0-4a59-b1f5-94ce93004d06.png' },
+                { name: 'Арка', price: '30 000', desc: '100×50×5 см', material: 'black-granite', shape: 'arch', img: 'https://cdn.poehali.dev/files/80ba5171-c4d0-4a59-b1f5-94ce93004d06.png' },
+                { name: 'Стандарт 1', price: '18 000', desc: '80×40×5 см', material: 'gray-granite', shape: 'classic', img: 'https://cdn.poehali.dev/files/80ba5171-c4d0-4a59-b1f5-94ce93004d06.png' },
+                { name: 'Премиум', price: '42 000', desc: '120×60×8 см', material: 'black-granite', shape: 'rounded', img: 'https://cdn.poehali.dev/files/80ba5171-c4d0-4a59-b1f5-94ce93004d06.png' },
               ].map((item) => (
-                <Card key={item.name} className="hover:shadow-lg transition-shadow overflow-hidden">
-                  <div className="aspect-video bg-gradient-to-b from-gray-700 to-gray-900 flex items-center justify-center">
-                    <div 
-                      className={`bg-gradient-to-b ${
-                        item.material === 'black-granite' ? 'from-gray-800 to-gray-950' :
-                        item.material === 'gray-granite' ? 'from-gray-500 to-gray-700' :
-                        'from-red-900 to-red-950'
-                      } ${
-                        item.shape === 'classic' ? 'rounded-lg' :
-                        item.shape === 'arch' ? 'rounded-t-full' :
-                        item.shape === 'rounded' ? 'rounded-3xl' :
-                        'clip-path-cross'
-                      } w-24 h-36 md:w-32 md:h-48 shadow-xl`}
-                    />
+                <Card key={item.name} className="hover:shadow-lg transition-shadow overflow-hidden flex flex-col">
+                  <div className="aspect-[3/4] bg-white flex items-center justify-center overflow-hidden">
+                    <img src={item.img} alt={item.name} className="w-full h-full object-cover" />
                   </div>
-                  <CardContent className="p-4 md:p-6">
-                    <h3 className="text-base md:text-lg font-semibold mb-2 line-clamp-2">{item.name}</h3>
-                    <p className="text-sm text-muted-foreground mb-4 line-clamp-2">{item.desc}</p>
-                    <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
-                      <p className="text-xl md:text-2xl font-bold text-accent">{item.price} ₽</p>
-                      <Button className="w-full sm:w-auto">Заказать</Button>
+                  <CardContent className="p-3 flex-1 flex flex-col">
+                    <h3 className="text-sm md:text-base font-semibold mb-1 line-clamp-1">{item.name}</h3>
+                    <p className="text-xs text-muted-foreground mb-2 line-clamp-2">{item.desc}</p>
+                    <div className="mt-auto">
+                      <p className="text-sm md:text-lg font-bold text-accent mb-2">от {item.price} ₽</p>
+                      <Button className="w-full text-xs md:text-sm h-8 md:h-10">Подробнее</Button>
                     </div>
                   </CardContent>
                 </Card>
               ))}
             </TabsContent>
             
-            <TabsContent value="horizontal-simple" className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+            <TabsContent value="horizontal-simple" className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
               {[
-                { name: 'Горизонтальный "Классика 1"', price: '25 000', desc: 'Чёрный гранит, 50×100×5 см', material: 'black-granite', shape: 'classic' },
-                { name: 'Горизонтальный "Классика 2"', price: '35 000', desc: 'Чёрный гранит, 60×120×8 см', material: 'black-granite', shape: 'classic' },
-                { name: 'Горизонтальный "Элегант"', price: '28 000', desc: 'Серый гранит, 55×110×5 см', material: 'gray-granite', shape: 'rounded' },
-                { name: 'Горизонтальный "Арка"', price: '30 000', desc: 'Чёрный гранит, арочная форма', material: 'black-granite', shape: 'arch' },
-                { name: 'Горизонтальный "Стандарт 1"', price: '18 000', desc: 'Серый гранит, 40×80×5 см', material: 'gray-granite', shape: 'classic' },
-                { name: 'Горизонтальный "Премиум"', price: '42 000', desc: 'Чёрный гранит премиум, 60×120×8 см', material: 'black-granite', shape: 'rounded' },
+                { name: 'Классика 1', price: '25 000', desc: '50×100×5 см', img: 'https://cdn.poehali.dev/files/80ba5171-c4d0-4a59-b1f5-94ce93004d06.png' },
+                { name: 'Классика 2', price: '35 000', desc: '60×120×8 см', img: 'https://cdn.poehali.dev/files/80ba5171-c4d0-4a59-b1f5-94ce93004d06.png' },
+                { name: 'Элегант', price: '28 000', desc: '55×110×5 см', img: 'https://cdn.poehali.dev/files/80ba5171-c4d0-4a59-b1f5-94ce93004d06.png' },
+                { name: 'Арка', price: '30 000', desc: '50×100×5 см', img: 'https://cdn.poehali.dev/files/80ba5171-c4d0-4a59-b1f5-94ce93004d06.png' },
+                { name: 'Стандарт 1', price: '18 000', desc: '40×80×5 см', img: 'https://cdn.poehali.dev/files/80ba5171-c4d0-4a59-b1f5-94ce93004d06.png' },
+                { name: 'Премиум', price: '42 000', desc: '60×120×8 см', img: 'https://cdn.poehali.dev/files/80ba5171-c4d0-4a59-b1f5-94ce93004d06.png' },
               ].map((item) => (
-                <Card key={item.name} className="hover:shadow-lg transition-shadow overflow-hidden">
-                  <div className="aspect-video bg-gradient-to-b from-gray-700 to-gray-900 flex items-center justify-center">
-                    <div 
-                      className={`bg-gradient-to-b ${
-                        item.material === 'black-granite' ? 'from-gray-800 to-gray-950' :
-                        item.material === 'gray-granite' ? 'from-gray-500 to-gray-700' :
-                        'from-red-900 to-red-950'
-                      } ${
-                        item.shape === 'classic' ? 'rounded-lg' :
-                        item.shape === 'arch' ? 'rounded-t-full' :
-                        item.shape === 'rounded' ? 'rounded-3xl' :
-                        'clip-path-cross'
-                      } w-36 h-24 md:w-48 md:h-32 shadow-xl`}
-                    />
+                <Card key={item.name} className="hover:shadow-lg transition-shadow overflow-hidden flex flex-col">
+                  <div className="aspect-[3/4] bg-white flex items-center justify-center overflow-hidden">
+                    <img src={item.img} alt={item.name} className="w-full h-full object-cover" />
                   </div>
-                  <CardContent className="p-4 md:p-6">
-                    <h3 className="text-base md:text-lg font-semibold mb-2 line-clamp-2">{item.name}</h3>
-                    <p className="text-sm text-muted-foreground mb-4 line-clamp-2">{item.desc}</p>
-                    <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
-                      <p className="text-xl md:text-2xl font-bold text-accent">{item.price} ₽</p>
-                      <Button className="w-full sm:w-auto">Заказать</Button>
+                  <CardContent className="p-3 flex-1 flex flex-col">
+                    <h3 className="text-sm md:text-base font-semibold mb-1 line-clamp-1">{item.name}</h3>
+                    <p className="text-xs text-muted-foreground mb-2 line-clamp-2">{item.desc}</p>
+                    <div className="mt-auto">
+                      <p className="text-sm md:text-lg font-bold text-accent mb-2">от {item.price} ₽</p>
+                      <Button className="w-full text-xs md:text-sm h-8 md:h-10">Подробнее</Button>
                     </div>
                   </CardContent>
                 </Card>
               ))}
             </TabsContent>
 
-            <TabsContent value="vertical-carved" className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+            <TabsContent value="vertical-carved" className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
               {[
-                { name: 'Резной "Цветы 1"', price: '45 000', desc: 'Чёрный гранит с резной гравировкой цветов', material: 'black-granite' },
-                { name: 'Резной "Розы"', price: '55 000', desc: 'Чёрный гранит, 120×60×8 см, резные розы', material: 'black-granite' },
-                { name: 'Резной "Лилии"', price: '48 000', desc: 'Серый гранит с гравировкой лилий', material: 'gray-granite' },
-                { name: 'Резной "Орнамент"', price: '47 000', desc: 'Красный гранит с резным орнаментом', material: 'red-granite' },
-                { name: 'Резной "Ангел"', price: '65 000', desc: 'Чёрный гранит с изображением ангела', material: 'black-granite' },
-                { name: 'Резной "Элитный"', price: '75 000', desc: 'Чёрный гранит, комплексная резьба', material: 'black-granite' },
+                { name: 'Цветы 1', price: '45 000', desc: '100×50×5 см', img: 'https://cdn.poehali.dev/files/80ba5171-c4d0-4a59-b1f5-94ce93004d06.png' },
+                { name: 'Розы', price: '55 000', desc: '120×60×8 см', img: 'https://cdn.poehali.dev/files/80ba5171-c4d0-4a59-b1f5-94ce93004d06.png' },
+                { name: 'Лилии', price: '48 000', desc: '110×55×5 см', img: 'https://cdn.poehali.dev/files/80ba5171-c4d0-4a59-b1f5-94ce93004d06.png' },
+                { name: 'Орнамент', price: '47 000', desc: '105×52×5 см', img: 'https://cdn.poehali.dev/files/80ba5171-c4d0-4a59-b1f5-94ce93004d06.png' },
+                { name: 'Ангел', price: '65 000', desc: '120×60×8 см', img: 'https://cdn.poehali.dev/files/80ba5171-c4d0-4a59-b1f5-94ce93004d06.png' },
+                { name: 'Элитный', price: '75 000', desc: '140×70×10 см', img: 'https://cdn.poehali.dev/files/80ba5171-c4d0-4a59-b1f5-94ce93004d06.png' },
               ].map((item) => (
-                <Card key={item.name} className="hover:shadow-lg transition-shadow overflow-hidden">
-                  <div className="aspect-video bg-gradient-to-b from-gray-700 to-gray-900 flex items-center justify-center">
-                    <div 
-                      className={`bg-gradient-to-b ${
-                        item.material === 'black-granite' ? 'from-gray-800 to-gray-950' :
-                        item.material === 'gray-granite' ? 'from-gray-500 to-gray-700' :
-                        'from-red-900 to-red-950'
-                      } rounded-lg w-24 h-36 md:w-32 md:h-48 shadow-xl`}
-                    />
+                <Card key={item.name} className="hover:shadow-lg transition-shadow overflow-hidden flex flex-col">
+                  <div className="aspect-[3/4] bg-white flex items-center justify-center overflow-hidden">
+                    <img src={item.img} alt={item.name} className="w-full h-full object-cover" />
                   </div>
-                  <CardContent className="p-4 md:p-6">
-                    <h3 className="text-base md:text-lg font-semibold mb-2 line-clamp-2">{item.name}</h3>
-                    <p className="text-sm text-muted-foreground mb-4 line-clamp-2">{item.desc}</p>
-                    <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
-                      <p className="text-xl md:text-2xl font-bold text-accent">{item.price} ₽</p>
-                      <Button className="w-full sm:w-auto">Заказать</Button>
+                  <CardContent className="p-3 flex-1 flex flex-col">
+                    <h3 className="text-sm md:text-base font-semibold mb-1 line-clamp-1">{item.name}</h3>
+                    <p className="text-xs text-muted-foreground mb-2 line-clamp-2">{item.desc}</p>
+                    <div className="mt-auto">
+                      <p className="text-sm md:text-lg font-bold text-accent mb-2">от {item.price} ₽</p>
+                      <Button className="w-full text-xs md:text-sm h-8 md:h-10">Подробнее</Button>
                     </div>
                   </CardContent>
                 </Card>
               ))}
             </TabsContent>
 
-            <TabsContent value="horizontal-carved" className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+            <TabsContent value="horizontal-carved" className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
               {[
-                { name: 'Резной "Цветы 1"', price: '45 000', desc: 'Чёрный гранит с резной гравировкой цветов', material: 'black-granite' },
-                { name: 'Резной "Розы"', price: '55 000', desc: 'Чёрный гранит, 60×120×8 см, резные розы', material: 'black-granite' },
-                { name: 'Резной "Лилии"', price: '48 000', desc: 'Серый гранит с гравировкой лилий', material: 'gray-granite' },
-                { name: 'Резной "Орнамент"', price: '47 000', desc: 'Красный гранит с резным орнаментом', material: 'red-granite' },
-                { name: 'Резной "Ангел"', price: '65 000', desc: 'Чёрный гранит с изображением ангела', material: 'black-granite' },
-                { name: 'Резной "Элитный"', price: '75 000', desc: 'Чёрный гранит, комплексная резьба', material: 'black-granite' },
+                { name: 'Цветы 1', price: '45 000', desc: '50×100×5 см', img: 'https://cdn.poehali.dev/files/80ba5171-c4d0-4a59-b1f5-94ce93004d06.png' },
+                { name: 'Розы', price: '55 000', desc: '60×120×8 см', img: 'https://cdn.poehali.dev/files/80ba5171-c4d0-4a59-b1f5-94ce93004d06.png' },
+                { name: 'Лилии', price: '48 000', desc: '55×110×5 см', img: 'https://cdn.poehali.dev/files/80ba5171-c4d0-4a59-b1f5-94ce93004d06.png' },
+                { name: 'Орнамент', price: '47 000', desc: '52×105×5 см', img: 'https://cdn.poehali.dev/files/80ba5171-c4d0-4a59-b1f5-94ce93004d06.png' },
+                { name: 'Ангел', price: '65 000', desc: '60×120×8 см', img: 'https://cdn.poehali.dev/files/80ba5171-c4d0-4a59-b1f5-94ce93004d06.png' },
+                { name: 'Элитный', price: '75 000', desc: '70×140×10 см', img: 'https://cdn.poehali.dev/files/80ba5171-c4d0-4a59-b1f5-94ce93004d06.png' },
               ].map((item) => (
-                <Card key={item.name} className="hover:shadow-lg transition-shadow overflow-hidden">
-                  <div className="aspect-video bg-gradient-to-b from-gray-700 to-gray-900 flex items-center justify-center">
-                    <div 
-                      className={`bg-gradient-to-b ${
-                        item.material === 'black-granite' ? 'from-gray-800 to-gray-950' :
-                        item.material === 'gray-granite' ? 'from-gray-500 to-gray-700' :
-                        'from-red-900 to-red-950'
-                      } rounded-lg w-36 h-24 md:w-48 md:h-32 shadow-xl`}
-                    />
+                <Card key={item.name} className="hover:shadow-lg transition-shadow overflow-hidden flex flex-col">
+                  <div className="aspect-[3/4] bg-white flex items-center justify-center overflow-hidden">
+                    <img src={item.img} alt={item.name} className="w-full h-full object-cover" />
                   </div>
-                  <CardContent className="p-4 md:p-6">
-                    <h3 className="text-base md:text-lg font-semibold mb-2 line-clamp-2">{item.name}</h3>
-                    <p className="text-sm text-muted-foreground mb-4 line-clamp-2">{item.desc}</p>
-                    <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
-                      <p className="text-xl md:text-2xl font-bold text-accent">{item.price} ₽</p>
-                      <Button className="w-full sm:w-auto">Заказать</Button>
+                  <CardContent className="p-3 flex-1 flex flex-col">
+                    <h3 className="text-sm md:text-base font-semibold mb-1 line-clamp-1">{item.name}</h3>
+                    <p className="text-xs text-muted-foreground mb-2 line-clamp-2">{item.desc}</p>
+                    <div className="mt-auto">
+                      <p className="text-sm md:text-lg font-bold text-accent mb-2">от {item.price} ₽</p>
+                      <Button className="w-full text-xs md:text-sm h-8 md:h-10">Подробнее</Button>
                     </div>
                   </CardContent>
                 </Card>
               ))}
             </TabsContent>
 
-            <TabsContent value="cross" className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+            <TabsContent value="cross" className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
               {[
-                { name: 'Крест "Православный 1"', price: '35 000', desc: 'Чёрный гранит, 120×60×8 см', material: 'black-granite' },
-                { name: 'Крест "Православный 2"', price: '45 000', desc: 'Чёрный гранит, 150×70×10 см', material: 'black-granite' },
-                { name: 'Крест "Католический"', price: '38 000', desc: 'Серый гранит, 130×65×8 см', material: 'gray-granite' },
-                { name: 'Крест "Резной"', price: '55 000', desc: 'Чёрный гранит с резным орнаментом', material: 'black-granite' },
-                { name: 'Крест "Элитный"', price: '65 000', desc: 'Чёрный гранит, комплексная резьба', material: 'black-granite' },
+                { name: 'Православный 1', price: '35 000', desc: '120×60×8 см', img: 'https://cdn.poehali.dev/files/80ba5171-c4d0-4a59-b1f5-94ce93004d06.png' },
+                { name: 'Православный 2', price: '45 000', desc: '150×70×10 см', img: 'https://cdn.poehali.dev/files/80ba5171-c4d0-4a59-b1f5-94ce93004d06.png' },
+                { name: 'Католический', price: '38 000', desc: '130×65×8 см', img: 'https://cdn.poehali.dev/files/80ba5171-c4d0-4a59-b1f5-94ce93004d06.png' },
+                { name: 'Резной', price: '55 000', desc: '140×68×10 см', img: 'https://cdn.poehali.dev/files/80ba5171-c4d0-4a59-b1f5-94ce93004d06.png' },
+                { name: 'Элитный', price: '65 000', desc: '160×75×12 см', img: 'https://cdn.poehali.dev/files/80ba5171-c4d0-4a59-b1f5-94ce93004d06.png' },
               ].map((item) => (
-                <Card key={item.name} className="hover:shadow-lg transition-shadow overflow-hidden">
-                  <div className="aspect-video bg-gradient-to-b from-gray-700 to-gray-900 flex items-center justify-center">
-                    <div 
-                      className={`bg-gradient-to-b ${
-                        item.material === 'black-granite' ? 'from-gray-800 to-gray-950' :
-                        item.material === 'gray-granite' ? 'from-gray-500 to-gray-700' :
-                        'from-red-900 to-red-950'
-                      } clip-path-cross w-20 h-28 md:w-24 md:h-36 shadow-xl`}
-                    />
+                <Card key={item.name} className="hover:shadow-lg transition-shadow overflow-hidden flex flex-col">
+                  <div className="aspect-[3/4] bg-white flex items-center justify-center overflow-hidden">
+                    <img src={item.img} alt={item.name} className="w-full h-full object-cover" />
                   </div>
-                  <CardContent className="p-4 md:p-6">
-                    <h3 className="text-base md:text-lg font-semibold mb-2 line-clamp-2">{item.name}</h3>
-                    <p className="text-sm text-muted-foreground mb-4 line-clamp-2">{item.desc}</p>
-                    <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
-                      <p className="text-xl md:text-2xl font-bold text-accent">{item.price} ₽</p>
-                      <Button className="w-full sm:w-auto">Заказать</Button>
+                  <CardContent className="p-3 flex-1 flex flex-col">
+                    <h3 className="text-sm md:text-base font-semibold mb-1 line-clamp-1">{item.name}</h3>
+                    <p className="text-xs text-muted-foreground mb-2 line-clamp-2">{item.desc}</p>
+                    <div className="mt-auto">
+                      <p className="text-sm md:text-lg font-bold text-accent mb-2">от {item.price} ₽</p>
+                      <Button className="w-full text-xs md:text-sm h-8 md:h-10">Подробнее</Button>
                     </div>
                   </CardContent>
                 </Card>
               ))}
             </TabsContent>
 
-            <TabsContent value="angel" className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+            <TabsContent value="angel" className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
               {[
-                { name: 'Ангел "Скорбящий"', price: '85 000', desc: 'Чёрный гранит, 150×80×40 см', material: 'black-granite' },
-                { name: 'Ангел "Молящийся"', price: '75 000', desc: 'Серый гранит, 140×70×35 см', material: 'gray-granite' },
-                { name: 'Ангел "Хранитель"', price: '95 000', desc: 'Чёрный гранит, 160×85×45 см', material: 'black-granite' },
-                { name: 'Ангел "Детский"', price: '55 000', desc: 'Серый гранит, 100×50×30 см', material: 'gray-granite' },
-                { name: 'Ангел "Элитный"', price: '120 000', desc: 'Чёрный гранит, 180×90×50 см', material: 'black-granite' },
+                { name: 'Скорбящий', price: '85 000', desc: '150×80×40 см', img: 'https://cdn.poehali.dev/files/80ba5171-c4d0-4a59-b1f5-94ce93004d06.png' },
+                { name: 'Молящийся', price: '75 000', desc: '140×70×35 см', img: 'https://cdn.poehali.dev/files/80ba5171-c4d0-4a59-b1f5-94ce93004d06.png' },
+                { name: 'Хранитель', price: '95 000', desc: '160×85×45 см', img: 'https://cdn.poehali.dev/files/80ba5171-c4d0-4a59-b1f5-94ce93004d06.png' },
+                { name: 'Детский', price: '55 000', desc: '100×50×30 см', img: 'https://cdn.poehali.dev/files/80ba5171-c4d0-4a59-b1f5-94ce93004d06.png' },
+                { name: 'Элитный', price: '120 000', desc: '180×90×50 см', img: 'https://cdn.poehali.dev/files/80ba5171-c4d0-4a59-b1f5-94ce93004d06.png' },
               ].map((item) => (
-                <Card key={item.name} className="hover:shadow-lg transition-shadow overflow-hidden">
-                  <div className="aspect-video bg-gradient-to-b from-gray-700 to-gray-900 flex items-center justify-center">
-                    <div 
-                      className={`bg-gradient-to-b ${
-                        item.material === 'black-granite' ? 'from-gray-800 to-gray-950' :
-                        item.material === 'gray-granite' ? 'from-gray-500 to-gray-700' :
-                        'from-red-900 to-red-950'
-                      } rounded-full w-20 h-28 md:w-28 md:h-40 shadow-xl`}
-                    />
+                <Card key={item.name} className="hover:shadow-lg transition-shadow overflow-hidden flex flex-col">
+                  <div className="aspect-[3/4] bg-white flex items-center justify-center overflow-hidden">
+                    <img src={item.img} alt={item.name} className="w-full h-full object-cover" />
                   </div>
-                  <CardContent className="p-4 md:p-6">
-                    <h3 className="text-base md:text-lg font-semibold mb-2 line-clamp-2">{item.name}</h3>
-                    <p className="text-sm text-muted-foreground mb-4 line-clamp-2">{item.desc}</p>
-                    <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
-                      <p className="text-xl md:text-2xl font-bold text-accent">{item.price} ₽</p>
-                      <Button className="w-full sm:w-auto">Заказать</Button>
+                  <CardContent className="p-3 flex-1 flex flex-col">
+                    <h3 className="text-sm md:text-base font-semibold mb-1 line-clamp-1">{item.name}</h3>
+                    <p className="text-xs text-muted-foreground mb-2 line-clamp-2">{item.desc}</p>
+                    <div className="mt-auto">
+                      <p className="text-sm md:text-lg font-bold text-accent mb-2">от {item.price} ₽</p>
+                      <Button className="w-full text-xs md:text-sm h-8 md:h-10">Подробнее</Button>
                     </div>
                   </CardContent>
                 </Card>
