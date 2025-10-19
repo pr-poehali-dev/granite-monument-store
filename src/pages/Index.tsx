@@ -290,12 +290,12 @@ export default function Index() {
             
             <TabsContent value="vertical-simple" className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
               {[
-                { name: 'Классика 1', price: '25 000', desc: '100×50×5 см', material: 'black-granite', shape: 'classic', img: 'https://cdn.poehali.dev/files/80ba5171-c4d0-4a59-b1f5-94ce93004d06.png' },
-                { name: 'Классика 2', price: '35 000', desc: '120×60×8 см', material: 'black-granite', shape: 'classic', img: 'https://cdn.poehali.dev/files/80ba5171-c4d0-4a59-b1f5-94ce93004d06.png' },
-                { name: 'Элегант', price: '28 000', desc: '110×55×5 см', material: 'gray-granite', shape: 'rounded', img: 'https://cdn.poehali.dev/files/80ba5171-c4d0-4a59-b1f5-94ce93004d06.png' },
-                { name: 'Арка', price: '30 000', desc: '100×50×5 см', material: 'black-granite', shape: 'arch', img: 'https://cdn.poehali.dev/files/80ba5171-c4d0-4a59-b1f5-94ce93004d06.png' },
-                { name: 'Стандарт 1', price: '18 000', desc: '80×40×5 см', material: 'gray-granite', shape: 'classic', img: 'https://cdn.poehali.dev/files/80ba5171-c4d0-4a59-b1f5-94ce93004d06.png' },
-                { name: 'Премиум', price: '42 000', desc: '120×60×8 см', material: 'black-granite', shape: 'rounded', img: 'https://cdn.poehali.dev/files/80ba5171-c4d0-4a59-b1f5-94ce93004d06.png' },
+                { name: 'Классика 1', price: '25 000', desc: '100×50×5 см', material: 'black-granite', shape: 'classic', img: 'https://cdn.poehali.dev/files/3347e17b-650e-405f-820c-760c6cf5c12e.png' },
+                { name: 'Классика 2', price: '35 000', desc: '120×60×8 см', material: 'black-granite', shape: 'classic', img: 'https://cdn.poehali.dev/files/3347e17b-650e-405f-820c-760c6cf5c12e.png' },
+                { name: 'Элегант', price: '28 000', desc: '110×55×5 см', material: 'gray-granite', shape: 'rounded', img: 'https://cdn.poehali.dev/files/3347e17b-650e-405f-820c-760c6cf5c12e.png' },
+                { name: 'Арка', price: '30 000', desc: '100×50×5 см', material: 'black-granite', shape: 'arch', img: 'https://cdn.poehali.dev/files/3347e17b-650e-405f-820c-760c6cf5c12e.png' },
+                { name: 'Стандарт 1', price: '18 000', desc: '80×40×5 см', material: 'gray-granite', shape: 'classic', img: 'https://cdn.poehali.dev/files/3347e17b-650e-405f-820c-760c6cf5c12e.png' },
+                { name: 'Премиум', price: '42 000', desc: '120×60×8 см', material: 'black-granite', shape: 'rounded', img: 'https://cdn.poehali.dev/files/3347e17b-650e-405f-820c-760c6cf5c12e.png' },
               ].map((item) => (
                 <Card key={item.name} className="hover:shadow-lg transition-shadow overflow-hidden flex flex-col">
                   <div 
@@ -318,12 +318,12 @@ export default function Index() {
             
             <TabsContent value="horizontal-simple" className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
               {[
-                { name: 'Классика 1', price: '25 000', desc: '50×100×5 см', img: 'https://cdn.poehali.dev/files/80ba5171-c4d0-4a59-b1f5-94ce93004d06.png' },
-                { name: 'Классика 2', price: '35 000', desc: '60×120×8 см', img: 'https://cdn.poehali.dev/files/80ba5171-c4d0-4a59-b1f5-94ce93004d06.png' },
-                { name: 'Элегант', price: '28 000', desc: '55×110×5 см', img: 'https://cdn.poehali.dev/files/80ba5171-c4d0-4a59-b1f5-94ce93004d06.png' },
-                { name: 'Арка', price: '30 000', desc: '50×100×5 см', img: 'https://cdn.poehali.dev/files/80ba5171-c4d0-4a59-b1f5-94ce93004d06.png' },
-                { name: 'Стандарт 1', price: '18 000', desc: '40×80×5 см', img: 'https://cdn.poehali.dev/files/80ba5171-c4d0-4a59-b1f5-94ce93004d06.png' },
-                { name: 'Премиум', price: '42 000', desc: '60×120×8 см', img: 'https://cdn.poehali.dev/files/80ba5171-c4d0-4a59-b1f5-94ce93004d06.png' },
+                { name: 'Классика 1', price: '25 000', desc: '50×100×5 см', img: 'https://cdn.poehali.dev/files/3347e17b-650e-405f-820c-760c6cf5c12e.png' },
+                { name: 'Классика 2', price: '35 000', desc: '60×120×8 см', img: 'https://cdn.poehali.dev/files/3347e17b-650e-405f-820c-760c6cf5c12e.png' },
+                { name: 'Элегант', price: '28 000', desc: '55×110×5 см', img: 'https://cdn.poehali.dev/files/3347e17b-650e-405f-820c-760c6cf5c12e.png' },
+                { name: 'Арка', price: '30 000', desc: '50×100×5 см', img: 'https://cdn.poehali.dev/files/3347e17b-650e-405f-820c-760c6cf5c12e.png' },
+                { name: 'Стандарт 1', price: '18 000', desc: '40×80×5 см', img: 'https://cdn.poehali.dev/files/3347e17b-650e-405f-820c-760c6cf5c12e.png' },
+                { name: 'Премиум', price: '42 000', desc: '60×120×8 см', img: 'https://cdn.poehali.dev/files/3347e17b-650e-405f-820c-760c6cf5c12e.png' },
               ].map((item) => (
                 <Card key={item.name} className="hover:shadow-lg transition-shadow overflow-hidden flex flex-col">
                   <div 
@@ -346,12 +346,12 @@ export default function Index() {
 
             <TabsContent value="vertical-carved" className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
               {[
-                { name: 'Цветы 1', price: '45 000', desc: '100×50×5 см', img: 'https://cdn.poehali.dev/files/80ba5171-c4d0-4a59-b1f5-94ce93004d06.png' },
-                { name: 'Розы', price: '55 000', desc: '120×60×8 см', img: 'https://cdn.poehali.dev/files/80ba5171-c4d0-4a59-b1f5-94ce93004d06.png' },
-                { name: 'Лилии', price: '48 000', desc: '110×55×5 см', img: 'https://cdn.poehali.dev/files/80ba5171-c4d0-4a59-b1f5-94ce93004d06.png' },
-                { name: 'Орнамент', price: '47 000', desc: '105×52×5 см', img: 'https://cdn.poehali.dev/files/80ba5171-c4d0-4a59-b1f5-94ce93004d06.png' },
-                { name: 'Ангел', price: '65 000', desc: '120×60×8 см', img: 'https://cdn.poehali.dev/files/80ba5171-c4d0-4a59-b1f5-94ce93004d06.png' },
-                { name: 'Элитный', price: '75 000', desc: '140×70×10 см', img: 'https://cdn.poehali.dev/files/80ba5171-c4d0-4a59-b1f5-94ce93004d06.png' },
+                { name: 'Цветы 1', price: '45 000', desc: '100×50×5 см', img: 'https://cdn.poehali.dev/files/3347e17b-650e-405f-820c-760c6cf5c12e.png' },
+                { name: 'Розы', price: '55 000', desc: '120×60×8 см', img: 'https://cdn.poehali.dev/files/3347e17b-650e-405f-820c-760c6cf5c12e.png' },
+                { name: 'Лилии', price: '48 000', desc: '110×55×5 см', img: 'https://cdn.poehali.dev/files/3347e17b-650e-405f-820c-760c6cf5c12e.png' },
+                { name: 'Орнамент', price: '47 000', desc: '105×52×5 см', img: 'https://cdn.poehali.dev/files/3347e17b-650e-405f-820c-760c6cf5c12e.png' },
+                { name: 'Ангел', price: '65 000', desc: '120×60×8 см', img: 'https://cdn.poehali.dev/files/3347e17b-650e-405f-820c-760c6cf5c12e.png' },
+                { name: 'Элитный', price: '75 000', desc: '140×70×10 см', img: 'https://cdn.poehali.dev/files/3347e17b-650e-405f-820c-760c6cf5c12e.png' },
               ].map((item) => (
                 <Card key={item.name} className="hover:shadow-lg transition-shadow overflow-hidden flex flex-col">
                   <div 
@@ -374,12 +374,12 @@ export default function Index() {
 
             <TabsContent value="horizontal-carved" className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
               {[
-                { name: 'Цветы 1', price: '45 000', desc: '50×100×5 см', img: 'https://cdn.poehali.dev/files/80ba5171-c4d0-4a59-b1f5-94ce93004d06.png' },
-                { name: 'Розы', price: '55 000', desc: '60×120×8 см', img: 'https://cdn.poehali.dev/files/80ba5171-c4d0-4a59-b1f5-94ce93004d06.png' },
-                { name: 'Лилии', price: '48 000', desc: '55×110×5 см', img: 'https://cdn.poehali.dev/files/80ba5171-c4d0-4a59-b1f5-94ce93004d06.png' },
-                { name: 'Орнамент', price: '47 000', desc: '52×105×5 см', img: 'https://cdn.poehali.dev/files/80ba5171-c4d0-4a59-b1f5-94ce93004d06.png' },
-                { name: 'Ангел', price: '65 000', desc: '60×120×8 см', img: 'https://cdn.poehali.dev/files/80ba5171-c4d0-4a59-b1f5-94ce93004d06.png' },
-                { name: 'Элитный', price: '75 000', desc: '70×140×10 см', img: 'https://cdn.poehali.dev/files/80ba5171-c4d0-4a59-b1f5-94ce93004d06.png' },
+                { name: 'Цветы 1', price: '45 000', desc: '50×100×5 см', img: 'https://cdn.poehali.dev/files/3347e17b-650e-405f-820c-760c6cf5c12e.png' },
+                { name: 'Розы', price: '55 000', desc: '60×120×8 см', img: 'https://cdn.poehali.dev/files/3347e17b-650e-405f-820c-760c6cf5c12e.png' },
+                { name: 'Лилии', price: '48 000', desc: '55×110×5 см', img: 'https://cdn.poehali.dev/files/3347e17b-650e-405f-820c-760c6cf5c12e.png' },
+                { name: 'Орнамент', price: '47 000', desc: '52×105×5 см', img: 'https://cdn.poehali.dev/files/3347e17b-650e-405f-820c-760c6cf5c12e.png' },
+                { name: 'Ангел', price: '65 000', desc: '60×120×8 см', img: 'https://cdn.poehali.dev/files/3347e17b-650e-405f-820c-760c6cf5c12e.png' },
+                { name: 'Элитный', price: '75 000', desc: '70×140×10 см', img: 'https://cdn.poehali.dev/files/3347e17b-650e-405f-820c-760c6cf5c12e.png' },
               ].map((item) => (
                 <Card key={item.name} className="hover:shadow-lg transition-shadow overflow-hidden flex flex-col">
                   <div 
@@ -402,11 +402,11 @@ export default function Index() {
 
             <TabsContent value="cross" className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
               {[
-                { name: 'Православный 1', price: '35 000', desc: '120×60×8 см', img: 'https://cdn.poehali.dev/files/80ba5171-c4d0-4a59-b1f5-94ce93004d06.png' },
-                { name: 'Православный 2', price: '45 000', desc: '150×70×10 см', img: 'https://cdn.poehali.dev/files/80ba5171-c4d0-4a59-b1f5-94ce93004d06.png' },
-                { name: 'Католический', price: '38 000', desc: '130×65×8 см', img: 'https://cdn.poehali.dev/files/80ba5171-c4d0-4a59-b1f5-94ce93004d06.png' },
-                { name: 'Резной', price: '55 000', desc: '140×68×10 см', img: 'https://cdn.poehali.dev/files/80ba5171-c4d0-4a59-b1f5-94ce93004d06.png' },
-                { name: 'Элитный', price: '65 000', desc: '160×75×12 см', img: 'https://cdn.poehali.dev/files/80ba5171-c4d0-4a59-b1f5-94ce93004d06.png' },
+                { name: 'Православный 1', price: '35 000', desc: '120×60×8 см', img: 'https://cdn.poehali.dev/files/3347e17b-650e-405f-820c-760c6cf5c12e.png' },
+                { name: 'Православный 2', price: '45 000', desc: '150×70×10 см', img: 'https://cdn.poehali.dev/files/3347e17b-650e-405f-820c-760c6cf5c12e.png' },
+                { name: 'Католический', price: '38 000', desc: '130×65×8 см', img: 'https://cdn.poehali.dev/files/3347e17b-650e-405f-820c-760c6cf5c12e.png' },
+                { name: 'Резной', price: '55 000', desc: '140×68×10 см', img: 'https://cdn.poehali.dev/files/3347e17b-650e-405f-820c-760c6cf5c12e.png' },
+                { name: 'Элитный', price: '65 000', desc: '160×75×12 см', img: 'https://cdn.poehali.dev/files/3347e17b-650e-405f-820c-760c6cf5c12e.png' },
               ].map((item) => (
                 <Card key={item.name} className="hover:shadow-lg transition-shadow overflow-hidden flex flex-col">
                   <div 
@@ -429,11 +429,11 @@ export default function Index() {
 
             <TabsContent value="angel" className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
               {[
-                { name: 'Скорбящий', price: '85 000', desc: '150×80×40 см', img: 'https://cdn.poehali.dev/files/80ba5171-c4d0-4a59-b1f5-94ce93004d06.png' },
-                { name: 'Молящийся', price: '75 000', desc: '140×70×35 см', img: 'https://cdn.poehali.dev/files/80ba5171-c4d0-4a59-b1f5-94ce93004d06.png' },
-                { name: 'Хранитель', price: '95 000', desc: '160×85×45 см', img: 'https://cdn.poehali.dev/files/80ba5171-c4d0-4a59-b1f5-94ce93004d06.png' },
-                { name: 'Детский', price: '55 000', desc: '100×50×30 см', img: 'https://cdn.poehali.dev/files/80ba5171-c4d0-4a59-b1f5-94ce93004d06.png' },
-                { name: 'Элитный', price: '120 000', desc: '180×90×50 см', img: 'https://cdn.poehali.dev/files/80ba5171-c4d0-4a59-b1f5-94ce93004d06.png' },
+                { name: 'Скорбящий', price: '85 000', desc: '150×80×40 см', img: 'https://cdn.poehali.dev/files/3347e17b-650e-405f-820c-760c6cf5c12e.png' },
+                { name: 'Молящийся', price: '75 000', desc: '140×70×35 см', img: 'https://cdn.poehali.dev/files/3347e17b-650e-405f-820c-760c6cf5c12e.png' },
+                { name: 'Хранитель', price: '95 000', desc: '160×85×45 см', img: 'https://cdn.poehali.dev/files/3347e17b-650e-405f-820c-760c6cf5c12e.png' },
+                { name: 'Детский', price: '55 000', desc: '100×50×30 см', img: 'https://cdn.poehali.dev/files/3347e17b-650e-405f-820c-760c6cf5c12e.png' },
+                { name: 'Элитный', price: '120 000', desc: '180×90×50 см', img: 'https://cdn.poehali.dev/files/3347e17b-650e-405f-820c-760c6cf5c12e.png' },
               ].map((item) => (
                 <Card key={item.name} className="hover:shadow-lg transition-shadow overflow-hidden flex flex-col">
                   <div 
