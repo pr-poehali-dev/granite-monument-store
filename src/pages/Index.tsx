@@ -277,13 +277,13 @@ export default function Index() {
           <p className="text-center text-muted-foreground mb-12 text-lg">Готовые решения для разных бюджетов</p>
           
           <Tabs defaultValue="vertical-simple" className="max-w-6xl mx-auto">
-            <TabsList className="grid w-full grid-cols-2 md:grid-cols-3 lg:grid-cols-6 mb-8 gap-2">
-              <TabsTrigger value="vertical-simple" className="text-xs md:text-sm">Вертикальные</TabsTrigger>
-              <TabsTrigger value="horizontal-simple" className="text-xs md:text-sm">Горизонтальные</TabsTrigger>
-              <TabsTrigger value="vertical-carved" className="text-xs md:text-sm">Резные верт.</TabsTrigger>
-              <TabsTrigger value="horizontal-carved" className="text-xs md:text-sm">Резные гориз.</TabsTrigger>
-              <TabsTrigger value="cross" className="text-xs md:text-sm">Кресты</TabsTrigger>
-              <TabsTrigger value="angel" className="text-xs md:text-sm">Ангелы</TabsTrigger>
+            <TabsList className="grid w-full grid-cols-2 md:grid-cols-3 lg:grid-cols-6 mb-8 gap-2 h-auto flex-wrap">
+              <TabsTrigger value="vertical-simple" className="text-xs md:text-sm whitespace-normal py-2">Вертикальные</TabsTrigger>
+              <TabsTrigger value="horizontal-simple" className="text-xs md:text-sm whitespace-normal py-2">Горизонтальные</TabsTrigger>
+              <TabsTrigger value="vertical-carved" className="text-xs md:text-sm whitespace-normal py-2">Резные верт.</TabsTrigger>
+              <TabsTrigger value="horizontal-carved" className="text-xs md:text-sm whitespace-normal py-2">Резные гориз.</TabsTrigger>
+              <TabsTrigger value="cross" className="text-xs md:text-sm whitespace-normal py-2">Кресты</TabsTrigger>
+              <TabsTrigger value="angel" className="text-xs md:text-sm whitespace-normal py-2">Ангелы</TabsTrigger>
             </TabsList>
             
             <TabsContent value="vertical-simple" className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
@@ -296,8 +296,8 @@ export default function Index() {
                 { name: 'Премиум', price: '42 000', desc: '120×60×8 см', material: 'black-granite', shape: 'rounded', img: 'https://cdn.poehali.dev/files/80ba5171-c4d0-4a59-b1f5-94ce93004d06.png' },
               ].map((item) => (
                 <Card key={item.name} className="hover:shadow-lg transition-shadow overflow-hidden flex flex-col">
-                  <div className="aspect-[3/4] bg-white flex items-center justify-center overflow-hidden">
-                    <img src={item.img} alt={item.name} className="w-full h-full object-cover" />
+                  <div className="aspect-[3/4] bg-white flex items-center justify-center p-4">
+                    <img src={item.img} alt={item.name} className="w-full h-full object-contain" />
                   </div>
                   <CardContent className="p-3 flex-1 flex flex-col">
                     <h3 className="text-sm md:text-base font-semibold mb-1 line-clamp-1">{item.name}</h3>
@@ -321,8 +321,8 @@ export default function Index() {
                 { name: 'Премиум', price: '42 000', desc: '60×120×8 см', img: 'https://cdn.poehali.dev/files/80ba5171-c4d0-4a59-b1f5-94ce93004d06.png' },
               ].map((item) => (
                 <Card key={item.name} className="hover:shadow-lg transition-shadow overflow-hidden flex flex-col">
-                  <div className="aspect-[3/4] bg-white flex items-center justify-center overflow-hidden">
-                    <img src={item.img} alt={item.name} className="w-full h-full object-cover" />
+                  <div className="aspect-[3/4] bg-white flex items-center justify-center p-4">
+                    <img src={item.img} alt={item.name} className="w-full h-full object-contain" />
                   </div>
                   <CardContent className="p-3 flex-1 flex flex-col">
                     <h3 className="text-sm md:text-base font-semibold mb-1 line-clamp-1">{item.name}</h3>
@@ -346,8 +346,8 @@ export default function Index() {
                 { name: 'Элитный', price: '75 000', desc: '140×70×10 см', img: 'https://cdn.poehali.dev/files/80ba5171-c4d0-4a59-b1f5-94ce93004d06.png' },
               ].map((item) => (
                 <Card key={item.name} className="hover:shadow-lg transition-shadow overflow-hidden flex flex-col">
-                  <div className="aspect-[3/4] bg-white flex items-center justify-center overflow-hidden">
-                    <img src={item.img} alt={item.name} className="w-full h-full object-cover" />
+                  <div className="aspect-[3/4] bg-white flex items-center justify-center p-4">
+                    <img src={item.img} alt={item.name} className="w-full h-full object-contain" />
                   </div>
                   <CardContent className="p-3 flex-1 flex flex-col">
                     <h3 className="text-sm md:text-base font-semibold mb-1 line-clamp-1">{item.name}</h3>
@@ -371,8 +371,8 @@ export default function Index() {
                 { name: 'Элитный', price: '75 000', desc: '70×140×10 см', img: 'https://cdn.poehali.dev/files/80ba5171-c4d0-4a59-b1f5-94ce93004d06.png' },
               ].map((item) => (
                 <Card key={item.name} className="hover:shadow-lg transition-shadow overflow-hidden flex flex-col">
-                  <div className="aspect-[3/4] bg-white flex items-center justify-center overflow-hidden">
-                    <img src={item.img} alt={item.name} className="w-full h-full object-cover" />
+                  <div className="aspect-[3/4] bg-white flex items-center justify-center p-4">
+                    <img src={item.img} alt={item.name} className="w-full h-full object-contain" />
                   </div>
                   <CardContent className="p-3 flex-1 flex flex-col">
                     <h3 className="text-sm md:text-base font-semibold mb-1 line-clamp-1">{item.name}</h3>
@@ -395,8 +395,8 @@ export default function Index() {
                 { name: 'Элитный', price: '65 000', desc: '160×75×12 см', img: 'https://cdn.poehali.dev/files/80ba5171-c4d0-4a59-b1f5-94ce93004d06.png' },
               ].map((item) => (
                 <Card key={item.name} className="hover:shadow-lg transition-shadow overflow-hidden flex flex-col">
-                  <div className="aspect-[3/4] bg-white flex items-center justify-center overflow-hidden">
-                    <img src={item.img} alt={item.name} className="w-full h-full object-cover" />
+                  <div className="aspect-[3/4] bg-white flex items-center justify-center p-4">
+                    <img src={item.img} alt={item.name} className="w-full h-full object-contain" />
                   </div>
                   <CardContent className="p-3 flex-1 flex flex-col">
                     <h3 className="text-sm md:text-base font-semibold mb-1 line-clamp-1">{item.name}</h3>
@@ -419,8 +419,8 @@ export default function Index() {
                 { name: 'Элитный', price: '120 000', desc: '180×90×50 см', img: 'https://cdn.poehali.dev/files/80ba5171-c4d0-4a59-b1f5-94ce93004d06.png' },
               ].map((item) => (
                 <Card key={item.name} className="hover:shadow-lg transition-shadow overflow-hidden flex flex-col">
-                  <div className="aspect-[3/4] bg-white flex items-center justify-center overflow-hidden">
-                    <img src={item.img} alt={item.name} className="w-full h-full object-cover" />
+                  <div className="aspect-[3/4] bg-white flex items-center justify-center p-4">
+                    <img src={item.img} alt={item.name} className="w-full h-full object-contain" />
                   </div>
                   <CardContent className="p-3 flex-1 flex flex-col">
                     <h3 className="text-sm md:text-base font-semibold mb-1 line-clamp-1">{item.name}</h3>
