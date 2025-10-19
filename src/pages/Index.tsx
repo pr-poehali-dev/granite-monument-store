@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Dialog, DialogContent } from '@/components/ui/dialog';
 import Icon from '@/components/ui/icon';
 
 export default function Index() {
@@ -10,6 +11,7 @@ export default function Index() {
   const [selectedShape, setSelectedShape] = useState('classic');
   const [selectedSize, setSelectedSize] = useState('medium');
   const [selectedMaterial, setSelectedMaterial] = useState('black-granite');
+  const [selectedImage, setSelectedImage] = useState<{img: string, name: string} | null>(null);
 
   const monumentOrientations = [
     { id: 'vertical', name: 'Вертикальные', icon: 'RectangleVertical' },
@@ -296,7 +298,10 @@ export default function Index() {
                 { name: 'Премиум', price: '42 000', desc: '120×60×8 см', material: 'black-granite', shape: 'rounded', img: 'https://cdn.poehali.dev/files/80ba5171-c4d0-4a59-b1f5-94ce93004d06.png' },
               ].map((item) => (
                 <Card key={item.name} className="hover:shadow-lg transition-shadow overflow-hidden flex flex-col">
-                  <div className="aspect-[3/4] bg-white flex items-center justify-center p-4">
+                  <div 
+                    className="aspect-[3/4] bg-white flex items-center justify-center p-4 cursor-pointer"
+                    onClick={() => setSelectedImage({img: item.img, name: item.name})}
+                  >
                     <img src={item.img} alt={item.name} className="w-full h-full object-contain" />
                   </div>
                   <CardContent className="p-3 flex-1 flex flex-col">
@@ -321,7 +326,10 @@ export default function Index() {
                 { name: 'Премиум', price: '42 000', desc: '60×120×8 см', img: 'https://cdn.poehali.dev/files/80ba5171-c4d0-4a59-b1f5-94ce93004d06.png' },
               ].map((item) => (
                 <Card key={item.name} className="hover:shadow-lg transition-shadow overflow-hidden flex flex-col">
-                  <div className="aspect-[3/4] bg-white flex items-center justify-center p-4">
+                  <div 
+                    className="aspect-[3/4] bg-white flex items-center justify-center p-4 cursor-pointer"
+                    onClick={() => setSelectedImage({img: item.img, name: item.name})}
+                  >
                     <img src={item.img} alt={item.name} className="w-full h-full object-contain" />
                   </div>
                   <CardContent className="p-3 flex-1 flex flex-col">
@@ -346,7 +354,10 @@ export default function Index() {
                 { name: 'Элитный', price: '75 000', desc: '140×70×10 см', img: 'https://cdn.poehali.dev/files/80ba5171-c4d0-4a59-b1f5-94ce93004d06.png' },
               ].map((item) => (
                 <Card key={item.name} className="hover:shadow-lg transition-shadow overflow-hidden flex flex-col">
-                  <div className="aspect-[3/4] bg-white flex items-center justify-center p-4">
+                  <div 
+                    className="aspect-[3/4] bg-white flex items-center justify-center p-4 cursor-pointer"
+                    onClick={() => setSelectedImage({img: item.img, name: item.name})}
+                  >
                     <img src={item.img} alt={item.name} className="w-full h-full object-contain" />
                   </div>
                   <CardContent className="p-3 flex-1 flex flex-col">
@@ -371,7 +382,10 @@ export default function Index() {
                 { name: 'Элитный', price: '75 000', desc: '70×140×10 см', img: 'https://cdn.poehali.dev/files/80ba5171-c4d0-4a59-b1f5-94ce93004d06.png' },
               ].map((item) => (
                 <Card key={item.name} className="hover:shadow-lg transition-shadow overflow-hidden flex flex-col">
-                  <div className="aspect-[3/4] bg-white flex items-center justify-center p-4">
+                  <div 
+                    className="aspect-[3/4] bg-white flex items-center justify-center p-4 cursor-pointer"
+                    onClick={() => setSelectedImage({img: item.img, name: item.name})}
+                  >
                     <img src={item.img} alt={item.name} className="w-full h-full object-contain" />
                   </div>
                   <CardContent className="p-3 flex-1 flex flex-col">
@@ -395,7 +409,10 @@ export default function Index() {
                 { name: 'Элитный', price: '65 000', desc: '160×75×12 см', img: 'https://cdn.poehali.dev/files/80ba5171-c4d0-4a59-b1f5-94ce93004d06.png' },
               ].map((item) => (
                 <Card key={item.name} className="hover:shadow-lg transition-shadow overflow-hidden flex flex-col">
-                  <div className="aspect-[3/4] bg-white flex items-center justify-center p-4">
+                  <div 
+                    className="aspect-[3/4] bg-white flex items-center justify-center p-4 cursor-pointer"
+                    onClick={() => setSelectedImage({img: item.img, name: item.name})}
+                  >
                     <img src={item.img} alt={item.name} className="w-full h-full object-contain" />
                   </div>
                   <CardContent className="p-3 flex-1 flex flex-col">
@@ -419,7 +436,10 @@ export default function Index() {
                 { name: 'Элитный', price: '120 000', desc: '180×90×50 см', img: 'https://cdn.poehali.dev/files/80ba5171-c4d0-4a59-b1f5-94ce93004d06.png' },
               ].map((item) => (
                 <Card key={item.name} className="hover:shadow-lg transition-shadow overflow-hidden flex flex-col">
-                  <div className="aspect-[3/4] bg-white flex items-center justify-center p-4">
+                  <div 
+                    className="aspect-[3/4] bg-white flex items-center justify-center p-4 cursor-pointer"
+                    onClick={() => setSelectedImage({img: item.img, name: item.name})}
+                  >
                     <img src={item.img} alt={item.name} className="w-full h-full object-contain" />
                   </div>
                   <CardContent className="p-3 flex-1 flex flex-col">
@@ -436,6 +456,29 @@ export default function Index() {
           </Tabs>
         </div>
       </section>
+
+      <Dialog open={!!selectedImage} onOpenChange={() => setSelectedImage(null)}>
+        <DialogContent className="max-w-4xl w-full p-0 bg-transparent border-none">
+          <div className="relative bg-white rounded-lg p-6">
+            <button
+              onClick={() => setSelectedImage(null)}
+              className="absolute top-4 right-4 z-10 bg-black/50 hover:bg-black/70 text-white rounded-full p-2 transition-colors"
+            >
+              <Icon name="X" size={24} />
+            </button>
+            {selectedImage && (
+              <div className="flex flex-col items-center">
+                <img
+                  src={selectedImage.img}
+                  alt={selectedImage.name}
+                  className="w-full h-auto max-h-[80vh] object-contain"
+                />
+                <h3 className="text-2xl font-semibold mt-4 text-center text-foreground">{selectedImage.name}</h3>
+              </div>
+            )}
+          </div>
+        </DialogContent>
+      </Dialog>
 
       <section id="services" className="py-20 bg-muted/30">
         <div className="container mx-auto px-4">
