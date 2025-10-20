@@ -57,23 +57,23 @@ export default function Index() {
 
   return (
     <div className="min-h-screen bg-background">
-      <header className="sticky top-0 z-50 bg-primary text-primary-foreground shadow-lg">
-        <div className="container mx-auto px-4 py-4">
+      <header className="sticky top-0 z-50 bg-white border-b border-border shadow-sm">
+        <div className="container mx-auto px-4 py-5">
           <nav className="flex items-center justify-between">
-            <h1 className="text-3xl font-bold tracking-tight">Гранит Мемориал</h1>
-            <div className="hidden md:flex gap-6">
+            <h1 className="text-2xl font-bold tracking-tight text-secondary">Гранит Мемориал</h1>
+            <div className="hidden md:flex gap-8 text-sm">
               {['home', 'constructor', 'gallery', 'catalog', 'services', 'about', 'contacts'].map((section) => (
                 <button
                   key={section}
                   onClick={() => scrollToSection(section)}
-                  className="hover:text-accent transition-colors capitalize"
+                  className="text-foreground hover:text-primary transition-colors font-medium uppercase tracking-wide"
                 >
                   {section === 'home' && 'Главная'}
                   {section === 'constructor' && 'Конструктор'}
                   {section === 'gallery' && 'Галерея'}
                   {section === 'catalog' && 'Каталог'}
                   {section === 'services' && 'Услуги'}
-                  {section === 'about' && 'О компании'}
+                  {section === 'about' && 'О нас'}
                   {section === 'contacts' && 'Контакты'}
                 </button>
               ))}
@@ -82,32 +82,47 @@ export default function Index() {
         </div>
       </header>
 
-      <section id="home" className="relative h-screen flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-primary/90 to-primary/70 z-10" />
-        <img 
-          src="https://cdn.poehali.dev/projects/a972bc37-a8fd-483e-b573-f52aa6f2509f/files/66b6c578-8c36-4da8-a0c0-947f3a5d4861.jpg" 
-          alt="Hero background"
-          className="absolute inset-0 w-full h-full object-cover"
-        />
-        <div className="relative z-20 text-center text-white px-4 animate-fade-in">
-          <h2 className="text-6xl md:text-7xl font-bold mb-6">Вечная память</h2>
-          <p className="text-xl md:text-2xl mb-8 max-w-2xl mx-auto opacity-90">
-            Изготовление памятников из натурального гранита с профессиональной ретушью фотографий
+      <section id="home" className="relative h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-muted via-background to-muted">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(0,0,0,0.03)_0%,transparent_50%)]" />
+        <div className="relative z-20 text-center px-4 animate-fade-in max-w-4xl mx-auto">
+          <div className="mb-6 inline-block">
+            <div className="w-16 h-1 bg-primary mx-auto mb-4"></div>
+          </div>
+          <h2 className="text-5xl md:text-7xl font-bold mb-6 text-secondary leading-tight">
+            Памятники из гранита<br/>
+            <span className="text-primary">премиум-класса</span>
+          </h2>
+          <p className="text-lg md:text-xl mb-10 max-w-2xl mx-auto text-muted-foreground leading-relaxed">
+            Индивидуальное изготовление надгробных памятников из натурального гранита.<br/>
+            Профессиональная обработка фотографий и художественная гравировка.
           </p>
-          <Button 
-            size="lg" 
-            className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold px-8 py-6 text-lg"
-            onClick={() => scrollToSection('constructor')}
-          >
-            Создать памятник
-          </Button>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <Button 
+              size="lg" 
+              className="bg-primary hover:bg-primary/90 text-white font-semibold px-10 py-6 text-base shadow-lg"
+              onClick={() => scrollToSection('constructor')}
+            >
+              Создать памятник онлайн
+            </Button>
+            <Button 
+              size="lg" 
+              variant="outline"
+              className="border-2 border-primary text-primary hover:bg-primary hover:text-white font-semibold px-10 py-6 text-base"
+              onClick={() => scrollToSection('catalog')}
+            >
+              Смотреть каталог
+            </Button>
+          </div>
         </div>
       </section>
 
-      <section id="constructor" className="py-20 bg-card">
+      <section id="constructor" className="py-24 bg-white">
         <div className="container mx-auto px-4">
-          <h2 className="text-5xl font-bold text-center mb-4">Конструктор памятников</h2>
-          <p className="text-center text-muted-foreground mb-12 text-lg">Создайте уникальный памятник онлайн</p>
+          <div className="text-center mb-4">
+            <div className="w-16 h-1 bg-primary mx-auto mb-6"></div>
+          </div>
+          <h2 className="text-4xl md:text-5xl font-bold text-center mb-4 text-secondary">Конструктор памятников</h2>
+          <p className="text-center text-muted-foreground mb-16 text-lg">Создайте уникальный памятник онлайн за несколько минут</p>
           
           <div className="grid md:grid-cols-2 gap-12 max-w-6xl mx-auto">
             <div className="space-y-8 animate-fade-in">
@@ -117,8 +132,8 @@ export default function Index() {
                   {monumentOrientations.map((orientation) => (
                     <Card 
                       key={orientation.id}
-                      className={`cursor-pointer transition-all hover:shadow-lg ${
-                        selectedOrientation === orientation.id ? 'ring-2 ring-accent' : ''
+                      className={`cursor-pointer transition-all hover:shadow-lg border-2 ${
+                        selectedOrientation === orientation.id ? 'border-primary shadow-lg' : 'border-transparent'
                       }`}
                       onClick={() => setSelectedOrientation(orientation.id)}
                     >
@@ -137,8 +152,8 @@ export default function Index() {
                   {monumentShapes.map((shape) => (
                     <Card 
                       key={shape.id}
-                      className={`cursor-pointer transition-all hover:shadow-lg ${
-                        selectedShape === shape.id ? 'ring-2 ring-accent' : ''
+                      className={`cursor-pointer transition-all hover:shadow-lg border-2 ${
+                        selectedShape === shape.id ? 'border-primary shadow-lg' : 'border-transparent'
                       }`}
                       onClick={() => setSelectedShape(shape.id)}
                     >
@@ -157,8 +172,8 @@ export default function Index() {
                   {monumentSizes.map((size) => (
                     <Card 
                       key={size.id}
-                      className={`cursor-pointer transition-all hover:shadow-lg ${
-                        selectedSize === size.id ? 'ring-2 ring-accent' : ''
+                      className={`cursor-pointer transition-all hover:shadow-lg border-2 ${
+                        selectedSize === size.id ? 'border-primary shadow-lg' : 'border-transparent'
                       }`}
                       onClick={() => setSelectedSize(size.id)}
                     >
@@ -167,7 +182,7 @@ export default function Index() {
                           <p className="font-semibold">{size.name}</p>
                           <p className="text-sm text-muted-foreground">{size.dimensions}</p>
                         </div>
-                        <p className="text-xl font-bold text-accent">{size.price} ₽</p>
+                        <p className="text-xl font-bold text-primary">{size.price} ₽</p>
                       </CardContent>
                     </Card>
                   ))}
@@ -237,10 +252,10 @@ export default function Index() {
                     <p className="text-lg">
                       <span className="font-semibold">Материал:</span> {materials.find(m => m.id === selectedMaterial)?.name}
                     </p>
-                    <p className="text-3xl font-bold text-accent mt-4">
+                    <p className="text-3xl font-bold text-primary mt-4">
                       {monumentSizes.find(s => s.id === selectedSize)?.price} ₽
                     </p>
-                    <Button className="w-full mt-6 bg-accent hover:bg-accent/90 text-accent-foreground" size="lg">
+                    <Button className="w-full mt-6 bg-primary hover:bg-primary/90 text-white" size="lg">
                       Оформить заказ
                     </Button>
                   </div>
@@ -251,10 +266,13 @@ export default function Index() {
         </div>
       </section>
 
-      <section id="gallery" className="py-20 bg-muted/30">
+      <section id="gallery" className="py-24 bg-muted">
         <div className="container mx-auto px-4">
-          <h2 className="text-5xl font-bold text-center mb-4">Галерея работ</h2>
-          <p className="text-center text-muted-foreground mb-12 text-lg">Наши завершённые проекты</p>
+          <div className="text-center mb-4">
+            <div className="w-16 h-1 bg-primary mx-auto mb-6"></div>
+          </div>
+          <h2 className="text-4xl md:text-5xl font-bold text-center mb-4 text-secondary">Галерея работ</h2>
+          <p className="text-center text-muted-foreground mb-16 text-lg">Наши завершённые проекты высокого качества</p>
           
           <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
             {galleryItems.map((item, index) => (
@@ -273,10 +291,13 @@ export default function Index() {
         </div>
       </section>
 
-      <section id="catalog" className="py-20 bg-card">
+      <section id="catalog" className="py-24 bg-white">
         <div className="container mx-auto px-4">
-          <h2 className="text-5xl font-bold text-center mb-4">Каталог</h2>
-          <p className="text-center text-muted-foreground mb-12 text-lg">Готовые решения для разных бюджетов</p>
+          <div className="text-center mb-4">
+            <div className="w-16 h-1 bg-primary mx-auto mb-6"></div>
+          </div>
+          <h2 className="text-4xl md:text-5xl font-bold text-center mb-4 text-secondary">Каталог памятников</h2>
+          <p className="text-center text-muted-foreground mb-16 text-lg">Готовые решения для разных бюджетов</p>
           
           <Tabs defaultValue="vertical-simple" className="max-w-6xl mx-auto">
             <TabsList className="grid w-full grid-cols-2 md:grid-cols-3 lg:grid-cols-6 mb-8 gap-2 h-auto flex-wrap">
@@ -480,16 +501,19 @@ export default function Index() {
         </DialogContent>
       </Dialog>
 
-      <section id="services" className="py-20 bg-muted/30">
+      <section id="services" className="py-24 bg-muted">
         <div className="container mx-auto px-4">
-          <h2 className="text-5xl font-bold text-center mb-4">Наши услуги</h2>
-          <p className="text-center text-muted-foreground mb-12 text-lg">Полный цикл работ от идеи до установки</p>
+          <div className="text-center mb-4">
+            <div className="w-16 h-1 bg-primary mx-auto mb-6"></div>
+          </div>
+          <h2 className="text-4xl md:text-5xl font-bold text-center mb-4 text-secondary">Наши услуги</h2>
+          <p className="text-center text-muted-foreground mb-16 text-lg">Полный цикл работ от идеи до установки памятника</p>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
             {services.map((service, index) => (
-              <Card key={service.title} className="text-center hover:shadow-xl transition-shadow animate-fade-in" style={{ animationDelay: `${index * 0.1}s` }}>
+              <Card key={service.title} className="text-center hover:shadow-xl transition-shadow animate-fade-in bg-white" style={{ animationDelay: `${index * 0.1}s` }}>
                 <CardContent className="p-8">
-                  <Icon name={service.icon} size={56} className="mx-auto mb-4 text-accent" />
+                  <Icon name={service.icon} size={56} className="mx-auto mb-4 text-primary" />
                   <h3 className="text-xl font-semibold mb-3">{service.title}</h3>
                   <p className="text-muted-foreground">{service.desc}</p>
                 </CardContent>
@@ -499,9 +523,12 @@ export default function Index() {
         </div>
       </section>
 
-      <section id="about" className="py-20 bg-card">
+      <section id="about" className="py-24 bg-white">
         <div className="container mx-auto px-4 max-w-4xl">
-          <h2 className="text-5xl font-bold text-center mb-12">О компании</h2>
+          <div className="text-center mb-4">
+            <div className="w-16 h-1 bg-primary mx-auto mb-6"></div>
+          </div>
+          <h2 className="text-4xl md:text-5xl font-bold text-center mb-12 text-secondary">О компании</h2>
           
           <div className="prose prose-lg max-w-none space-y-6">
             <p className="text-lg leading-relaxed">
@@ -510,21 +537,21 @@ export default function Index() {
             </p>
             
             <div className="grid md:grid-cols-3 gap-6 my-8">
-              <Card>
+              <Card className="bg-muted border-none">
                 <CardContent className="p-6 text-center">
-                  <p className="text-4xl font-bold text-accent mb-2">15+</p>
+                  <p className="text-4xl font-bold text-primary mb-2">15+</p>
                   <p className="text-muted-foreground">лет на рынке</p>
                 </CardContent>
               </Card>
-              <Card>
+              <Card className="bg-muted border-none">
                 <CardContent className="p-6 text-center">
-                  <p className="text-4xl font-bold text-accent mb-2">3000+</p>
+                  <p className="text-4xl font-bold text-primary mb-2">3000+</p>
                   <p className="text-muted-foreground">выполненных заказов</p>
                 </CardContent>
               </Card>
-              <Card>
+              <Card className="bg-muted border-none">
                 <CardContent className="p-6 text-center">
-                  <p className="text-4xl font-bold text-accent mb-2">100%</p>
+                  <p className="text-4xl font-bold text-primary mb-2">100%</p>
                   <p className="text-muted-foreground">гарантия качества</p>
                 </CardContent>
               </Card>
@@ -546,37 +573,37 @@ export default function Index() {
           <div className="grid md:grid-cols-2 gap-12">
             <div className="space-y-6">
               <div className="flex items-start gap-4">
-                <Icon name="MapPin" size={24} className="text-accent mt-1" />
+                <Icon name="MapPin" size={24} className="text-primary mt-1" />
                 <div>
                   <h3 className="text-xl font-semibold mb-1">Адрес</h3>
-                  <p className="opacity-90">г. Москва, ул. Примерная, д. 123</p>
+                  <p className="text-muted-foreground">г. Москва, ул. Примерная, д. 123</p>
                 </div>
               </div>
               
               <div className="flex items-start gap-4">
-                <Icon name="Phone" size={24} className="text-accent mt-1" />
+                <Icon name="Phone" size={24} className="text-primary mt-1" />
                 <div>
                   <h3 className="text-xl font-semibold mb-1">Телефон</h3>
-                  <p className="opacity-90">+7 (495) 123-45-67</p>
-                  <p className="opacity-90">+7 (800) 555-35-35</p>
+                  <p className="text-muted-foreground">+7 (495) 123-45-67</p>
+                  <p className="text-muted-foreground">+7 (800) 555-35-35</p>
                 </div>
               </div>
               
               <div className="flex items-start gap-4">
-                <Icon name="Mail" size={24} className="text-accent mt-1" />
+                <Icon name="Mail" size={24} className="text-primary mt-1" />
                 <div>
                   <h3 className="text-xl font-semibold mb-1">Email</h3>
-                  <p className="opacity-90">info@granit-memorial.ru</p>
+                  <p className="text-muted-foreground">info@granit-memorial.ru</p>
                 </div>
               </div>
               
               <div className="flex items-start gap-4">
-                <Icon name="Clock" size={24} className="text-accent mt-1" />
+                <Icon name="Clock" size={24} className="text-primary mt-1" />
                 <div>
                   <h3 className="text-xl font-semibold mb-1">Режим работы</h3>
-                  <p className="opacity-90">Пн-Пт: 9:00 - 18:00</p>
-                  <p className="opacity-90">Сб: 10:00 - 16:00</p>
-                  <p className="opacity-90">Вс: выходной</p>
+                  <p className="text-muted-foreground">Пн-Пт: 9:00 - 18:00</p>
+                  <p className="text-muted-foreground">Сб: 10:00 - 16:00</p>
+                  <p className="text-muted-foreground">Вс: выходной</p>
                 </div>
               </div>
             </div>
@@ -608,7 +635,7 @@ export default function Index() {
                       placeholder="Опишите ваш вопрос"
                     />
                   </div>
-                  <Button className="w-full bg-accent hover:bg-accent/90 text-accent-foreground" size="lg">
+                  <Button className="w-full bg-primary hover:bg-primary/90 text-white" size="lg">
                     Отправить заявку
                   </Button>
                 </form>
@@ -618,7 +645,7 @@ export default function Index() {
         </div>
       </section>
 
-      <footer className="bg-primary/95 text-primary-foreground py-8">
+      <footer className="bg-secondary text-white py-8">
         <div className="container mx-auto px-4 text-center">
           <p className="opacity-80">© 2024 Гранит Мемориал. Все права защищены.</p>
         </div>
