@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -8,6 +8,20 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
 import Icon from '@/components/ui/icon';
+import { API_URLS } from '@/config/api';
+
+interface Product {
+  id: number;
+  name: string;
+  category: string;
+  shape?: string;
+  size?: string;
+  dimensions?: string;
+  material?: string;
+  price: number;
+  description?: string;
+  image_url?: string;
+}
 
 export default function Index() {
   const [activeSection, setActiveSection] = useState('home');
@@ -26,6 +40,26 @@ export default function Index() {
   });
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
+  
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loadingProducts, setLoadingProducts] = useState(false);
+  
+  useEffect(() => {
+    loadProducts();
+  }, []);
+  
+  const loadProducts = async () => {
+    setLoadingProducts(true);
+    try {
+      const response = await fetch(API_URLS.products);
+      const data = await response.json();
+      setProducts(data.products || []);
+    } catch (error) {
+      console.error('Failed to load products:', error);
+    } finally {
+      setLoadingProducts(false);
+    }
+  };
 
   const monumentOrientations = [
     { id: 'vertical', name: 'Вертикальные', icon: 'RectangleVertical' },
@@ -445,181 +479,122 @@ export default function Index() {
           <h2 className="text-4xl md:text-5xl font-bold text-center mb-4 text-secondary">Каталог памятников</h2>
           <p className="text-center text-muted-foreground mb-16 text-lg">Готовые решения для разных бюджетов</p>
           
-          <Tabs defaultValue="vertical-simple" className="max-w-6xl mx-auto">
-            <TabsList className="grid w-full grid-cols-2 md:grid-cols-3 lg:grid-cols-6 mb-8 gap-2 h-auto flex-wrap">
-              <TabsTrigger value="vertical-simple" className="text-xs md:text-sm whitespace-normal py-2">Вертикальные</TabsTrigger>
-              <TabsTrigger value="horizontal-simple" className="text-xs md:text-sm whitespace-normal py-2">Горизонтальные</TabsTrigger>
-              <TabsTrigger value="vertical-carved" className="text-xs md:text-sm whitespace-normal py-2">Резные верт.</TabsTrigger>
-              <TabsTrigger value="horizontal-carved" className="text-xs md:text-sm whitespace-normal py-2">Резные гориз.</TabsTrigger>
-              <TabsTrigger value="cross" className="text-xs md:text-sm whitespace-normal py-2">Кресты</TabsTrigger>
-              <TabsTrigger value="angel" className="text-xs md:text-sm whitespace-normal py-2">Ангелы</TabsTrigger>
+          <Tabs defaultValue="all" className="max-w-6xl mx-auto">
+            <TabsList className="grid w-full grid-cols-2 md:grid-cols-4 mb-8 gap-2 h-auto">
+              <TabsTrigger value="all" className="text-xs md:text-sm py-2">Все</TabsTrigger>
+              <TabsTrigger value="standard" className="text-xs md:text-sm py-2">Стандартные</TabsTrigger>
+              <TabsTrigger value="premium" className="text-xs md:text-sm py-2">Премиум</TabsTrigger>
+              <TabsTrigger value="exclusive" className="text-xs md:text-sm py-2">Эксклюзивные</TabsTrigger>
             </TabsList>
             
-            <TabsContent value="vertical-simple" className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
-              {[
-                { name: 'Классика 1', price: '25 000', desc: '100×50×5 см', material: 'black-granite', shape: 'classic', img: 'https://cdn.poehali.dev/files/3347e17b-650e-405f-820c-760c6cf5c12e.png' },
-                { name: 'Классика 2', price: '35 000', desc: '120×60×8 см', material: 'black-granite', shape: 'classic', img: 'https://cdn.poehali.dev/files/3347e17b-650e-405f-820c-760c6cf5c12e.png' },
-                { name: 'Элегант', price: '28 000', desc: '110×55×5 см', material: 'gray-granite', shape: 'rounded', img: 'https://cdn.poehali.dev/files/3347e17b-650e-405f-820c-760c6cf5c12e.png' },
-                { name: 'Арка', price: '30 000', desc: '100×50×5 см', material: 'black-granite', shape: 'arch', img: 'https://cdn.poehali.dev/files/3347e17b-650e-405f-820c-760c6cf5c12e.png' },
-                { name: 'Стандарт 1', price: '18 000', desc: '80×40×5 см', material: 'gray-granite', shape: 'classic', img: 'https://cdn.poehali.dev/files/3347e17b-650e-405f-820c-760c6cf5c12e.png' },
-                { name: 'Премиум', price: '42 000', desc: '120×60×8 см', material: 'black-granite', shape: 'rounded', img: 'https://cdn.poehali.dev/files/3347e17b-650e-405f-820c-760c6cf5c12e.png' },
-              ].map((item) => (
-                <Card key={item.name} className="hover:shadow-lg transition-shadow overflow-hidden flex flex-col">
+            {loadingProducts ? (
+              <div className="text-center py-12">
+                <Icon name="Loader2" size={48} className="mx-auto animate-spin text-primary" />
+                <p className="mt-4 text-muted-foreground">Загрузка каталога...</p>
+              </div>
+            ) : (
+              <>
+                <TabsContent value="all" className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
+                  {products.map((item) => (
+                <Card key={item.id} className="hover:shadow-lg transition-shadow overflow-hidden flex flex-col border-2 hover:border-primary/50">
                   <div 
-                    className="aspect-[3/4] bg-white flex items-center justify-center p-4 cursor-pointer"
-                    onClick={() => setSelectedImage({img: item.img, name: item.name})}
+                    className="aspect-[3/4] bg-gray-50 flex items-center justify-center p-4 cursor-pointer"
+                    onClick={() => setSelectedImage({img: item.image_url || '', name: item.name})}
                   >
-                    <img src={item.img} alt={item.name} className="w-full h-full object-contain" />
+                    <img 
+                      src={item.image_url || 'https://cdn.poehali.dev/files/3347e17b-650e-405f-820c-760c6cf5c12e.png'} 
+                      alt={item.name} 
+                      className="w-full h-full object-contain" 
+                    />
                   </div>
                   <CardContent className="p-3 flex-1 flex flex-col">
                     <h3 className="text-sm md:text-base font-semibold mb-1 line-clamp-1">{item.name}</h3>
-                    <p className="text-xs text-muted-foreground mb-2 line-clamp-2">{item.desc}</p>
+                    <p className="text-xs text-muted-foreground mb-2 line-clamp-2">{item.dimensions || item.description}</p>
                     <div className="mt-auto">
-                      <p className="text-sm md:text-lg font-bold text-accent mb-2">от {item.price} ₽</p>
-                      <Button className="w-full text-xs md:text-sm h-8 md:h-10">Подробнее</Button>
+                      <p className="text-sm md:text-lg font-bold text-primary mb-2">от {item.price.toLocaleString('ru-RU')} ₽</p>
+                      <Button className="w-full text-xs md:text-sm h-8 md:h-10 bg-primary hover:bg-primary/90 text-white">Подробнее</Button>
                     </div>
                   </CardContent>
                 </Card>
               ))}
             </TabsContent>
             
-            <TabsContent value="horizontal-simple" className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
-              {[
-                { name: 'Классика 1', price: '25 000', desc: '50×100×5 см', img: 'https://cdn.poehali.dev/files/3347e17b-650e-405f-820c-760c6cf5c12e.png' },
-                { name: 'Классика 2', price: '35 000', desc: '60×120×8 см', img: 'https://cdn.poehali.dev/files/3347e17b-650e-405f-820c-760c6cf5c12e.png' },
-                { name: 'Элегант', price: '28 000', desc: '55×110×5 см', img: 'https://cdn.poehali.dev/files/3347e17b-650e-405f-820c-760c6cf5c12e.png' },
-                { name: 'Арка', price: '30 000', desc: '50×100×5 см', img: 'https://cdn.poehali.dev/files/3347e17b-650e-405f-820c-760c6cf5c12e.png' },
-                { name: 'Стандарт 1', price: '18 000', desc: '40×80×5 см', img: 'https://cdn.poehali.dev/files/3347e17b-650e-405f-820c-760c6cf5c12e.png' },
-                { name: 'Премиум', price: '42 000', desc: '60×120×8 см', img: 'https://cdn.poehali.dev/files/3347e17b-650e-405f-820c-760c6cf5c12e.png' },
-              ].map((item) => (
-                <Card key={item.name} className="hover:shadow-lg transition-shadow overflow-hidden flex flex-col">
+            <TabsContent value="standard" className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
+              {products.filter(p => p.category === 'standard').map((item) => (
+                <Card key={item.id} className="hover:shadow-lg transition-shadow overflow-hidden flex flex-col border-2 hover:border-primary/50">
                   <div 
-                    className="aspect-[3/4] bg-white flex items-center justify-center p-4 cursor-pointer"
-                    onClick={() => setSelectedImage({img: item.img, name: item.name})}
+                    className="aspect-[3/4] bg-gray-50 flex items-center justify-center p-4 cursor-pointer"
+                    onClick={() => setSelectedImage({img: item.image_url || '', name: item.name})}
                   >
-                    <img src={item.img} alt={item.name} className="w-full h-full object-contain" />
+                    <img 
+                      src={item.image_url || 'https://cdn.poehali.dev/files/3347e17b-650e-405f-820c-760c6cf5c12e.png'} 
+                      alt={item.name} 
+                      className="w-full h-full object-contain" 
+                    />
                   </div>
                   <CardContent className="p-3 flex-1 flex flex-col">
                     <h3 className="text-sm md:text-base font-semibold mb-1 line-clamp-1">{item.name}</h3>
-                    <p className="text-xs text-muted-foreground mb-2 line-clamp-2">{item.desc}</p>
+                    <p className="text-xs text-muted-foreground mb-2 line-clamp-2">{item.dimensions || item.description}</p>
                     <div className="mt-auto">
-                      <p className="text-sm md:text-lg font-bold text-accent mb-2">от {item.price} ₽</p>
-                      <Button className="w-full text-xs md:text-sm h-8 md:h-10">Подробнее</Button>
+                      <p className="text-sm md:text-lg font-bold text-primary mb-2">от {item.price.toLocaleString('ru-RU')} ₽</p>
+                      <Button className="w-full text-xs md:text-sm h-8 md:h-10 bg-primary hover:bg-primary/90 text-white">Подробнее</Button>
                     </div>
                   </CardContent>
                 </Card>
               ))}
             </TabsContent>
 
-            <TabsContent value="vertical-carved" className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
-              {[
-                { name: 'Цветы 1', price: '45 000', desc: '100×50×5 см', img: 'https://cdn.poehali.dev/files/3347e17b-650e-405f-820c-760c6cf5c12e.png' },
-                { name: 'Розы', price: '55 000', desc: '120×60×8 см', img: 'https://cdn.poehali.dev/files/3347e17b-650e-405f-820c-760c6cf5c12e.png' },
-                { name: 'Лилии', price: '48 000', desc: '110×55×5 см', img: 'https://cdn.poehali.dev/files/3347e17b-650e-405f-820c-760c6cf5c12e.png' },
-                { name: 'Орнамент', price: '47 000', desc: '105×52×5 см', img: 'https://cdn.poehali.dev/files/3347e17b-650e-405f-820c-760c6cf5c12e.png' },
-                { name: 'Ангел', price: '65 000', desc: '120×60×8 см', img: 'https://cdn.poehali.dev/files/3347e17b-650e-405f-820c-760c6cf5c12e.png' },
-                { name: 'Элитный', price: '75 000', desc: '140×70×10 см', img: 'https://cdn.poehali.dev/files/3347e17b-650e-405f-820c-760c6cf5c12e.png' },
-              ].map((item) => (
-                <Card key={item.name} className="hover:shadow-lg transition-shadow overflow-hidden flex flex-col">
+            <TabsContent value="premium" className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
+              {products.filter(p => p.category === 'premium').map((item) => (
+                <Card key={item.id} className="hover:shadow-lg transition-shadow overflow-hidden flex flex-col border-2 hover:border-primary/50">
                   <div 
-                    className="aspect-[3/4] bg-white flex items-center justify-center p-4 cursor-pointer"
-                    onClick={() => setSelectedImage({img: item.img, name: item.name})}
+                    className="aspect-[3/4] bg-gray-50 flex items-center justify-center p-4 cursor-pointer"
+                    onClick={() => setSelectedImage({img: item.image_url || '', name: item.name})}
                   >
-                    <img src={item.img} alt={item.name} className="w-full h-full object-contain" />
+                    <img 
+                      src={item.image_url || 'https://cdn.poehali.dev/files/3347e17b-650e-405f-820c-760c6cf5c12e.png'} 
+                      alt={item.name} 
+                      className="w-full h-full object-contain" 
+                    />
                   </div>
                   <CardContent className="p-3 flex-1 flex flex-col">
                     <h3 className="text-sm md:text-base font-semibold mb-1 line-clamp-1">{item.name}</h3>
-                    <p className="text-xs text-muted-foreground mb-2 line-clamp-2">{item.desc}</p>
+                    <p className="text-xs text-muted-foreground mb-2 line-clamp-2">{item.dimensions || item.description}</p>
                     <div className="mt-auto">
-                      <p className="text-sm md:text-lg font-bold text-accent mb-2">от {item.price} ₽</p>
-                      <Button className="w-full text-xs md:text-sm h-8 md:h-10">Подробнее</Button>
+                      <p className="text-sm md:text-lg font-bold text-primary mb-2">от {item.price.toLocaleString('ru-RU')} ₽</p>
+                      <Button className="w-full text-xs md:text-sm h-8 md:h-10 bg-primary hover:bg-primary/90 text-white">Подробнее</Button>
                     </div>
                   </CardContent>
                 </Card>
               ))}
             </TabsContent>
 
-            <TabsContent value="horizontal-carved" className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
-              {[
-                { name: 'Цветы 1', price: '45 000', desc: '50×100×5 см', img: 'https://cdn.poehali.dev/files/3347e17b-650e-405f-820c-760c6cf5c12e.png' },
-                { name: 'Розы', price: '55 000', desc: '60×120×8 см', img: 'https://cdn.poehali.dev/files/3347e17b-650e-405f-820c-760c6cf5c12e.png' },
-                { name: 'Лилии', price: '48 000', desc: '55×110×5 см', img: 'https://cdn.poehali.dev/files/3347e17b-650e-405f-820c-760c6cf5c12e.png' },
-                { name: 'Орнамент', price: '47 000', desc: '52×105×5 см', img: 'https://cdn.poehali.dev/files/3347e17b-650e-405f-820c-760c6cf5c12e.png' },
-                { name: 'Ангел', price: '65 000', desc: '60×120×8 см', img: 'https://cdn.poehali.dev/files/3347e17b-650e-405f-820c-760c6cf5c12e.png' },
-                { name: 'Элитный', price: '75 000', desc: '70×140×10 см', img: 'https://cdn.poehali.dev/files/3347e17b-650e-405f-820c-760c6cf5c12e.png' },
-              ].map((item) => (
-                <Card key={item.name} className="hover:shadow-lg transition-shadow overflow-hidden flex flex-col">
+            <TabsContent value="exclusive" className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
+              {products.filter(p => p.category === 'exclusive').map((item) => (
+                <Card key={item.id} className="hover:shadow-lg transition-shadow overflow-hidden flex flex-col border-2 hover:border-primary/50">
                   <div 
-                    className="aspect-[3/4] bg-white flex items-center justify-center p-4 cursor-pointer"
-                    onClick={() => setSelectedImage({img: item.img, name: item.name})}
+                    className="aspect-[3/4] bg-gray-50 flex items-center justify-center p-4 cursor-pointer"
+                    onClick={() => setSelectedImage({img: item.image_url || '', name: item.name})}
                   >
-                    <img src={item.img} alt={item.name} className="w-full h-full object-contain" />
+                    <img 
+                      src={item.image_url || 'https://cdn.poehali.dev/files/3347e17b-650e-405f-820c-760c6cf5c12e.png'} 
+                      alt={item.name} 
+                      className="w-full h-full object-contain" 
+                    />
                   </div>
                   <CardContent className="p-3 flex-1 flex flex-col">
                     <h3 className="text-sm md:text-base font-semibold mb-1 line-clamp-1">{item.name}</h3>
-                    <p className="text-xs text-muted-foreground mb-2 line-clamp-2">{item.desc}</p>
+                    <p className="text-xs text-muted-foreground mb-2 line-clamp-2">{item.dimensions || item.description}</p>
                     <div className="mt-auto">
-                      <p className="text-sm md:text-lg font-bold text-accent mb-2">от {item.price} ₽</p>
-                      <Button className="w-full text-xs md:text-sm h-8 md:h-10">Подробнее</Button>
+                      <p className="text-sm md:text-lg font-bold text-primary mb-2">от {item.price.toLocaleString('ru-RU')} ₽</p>
+                      <Button className="w-full text-xs md:text-sm h-8 md:h-10 bg-primary hover:bg-primary/90 text-white">Подробнее</Button>
                     </div>
                   </CardContent>
                 </Card>
               ))}
             </TabsContent>
-
-            <TabsContent value="cross" className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
-              {[
-                { name: 'Православный 1', price: '35 000', desc: '120×60×8 см', img: 'https://cdn.poehali.dev/files/3347e17b-650e-405f-820c-760c6cf5c12e.png' },
-                { name: 'Православный 2', price: '45 000', desc: '150×70×10 см', img: 'https://cdn.poehali.dev/files/3347e17b-650e-405f-820c-760c6cf5c12e.png' },
-                { name: 'Католический', price: '38 000', desc: '130×65×8 см', img: 'https://cdn.poehali.dev/files/3347e17b-650e-405f-820c-760c6cf5c12e.png' },
-                { name: 'Резной', price: '55 000', desc: '140×68×10 см', img: 'https://cdn.poehali.dev/files/3347e17b-650e-405f-820c-760c6cf5c12e.png' },
-                { name: 'Элитный', price: '65 000', desc: '160×75×12 см', img: 'https://cdn.poehali.dev/files/3347e17b-650e-405f-820c-760c6cf5c12e.png' },
-              ].map((item) => (
-                <Card key={item.name} className="hover:shadow-lg transition-shadow overflow-hidden flex flex-col">
-                  <div 
-                    className="aspect-[3/4] bg-white flex items-center justify-center p-4 cursor-pointer"
-                    onClick={() => setSelectedImage({img: item.img, name: item.name})}
-                  >
-                    <img src={item.img} alt={item.name} className="w-full h-full object-contain" />
-                  </div>
-                  <CardContent className="p-3 flex-1 flex flex-col">
-                    <h3 className="text-sm md:text-base font-semibold mb-1 line-clamp-1">{item.name}</h3>
-                    <p className="text-xs text-muted-foreground mb-2 line-clamp-2">{item.desc}</p>
-                    <div className="mt-auto">
-                      <p className="text-sm md:text-lg font-bold text-accent mb-2">от {item.price} ₽</p>
-                      <Button className="w-full text-xs md:text-sm h-8 md:h-10">Подробнее</Button>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </TabsContent>
-
-            <TabsContent value="angel" className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
-              {[
-                { name: 'Скорбящий', price: '85 000', desc: '150×80×40 см', img: 'https://cdn.poehali.dev/files/3347e17b-650e-405f-820c-760c6cf5c12e.png' },
-                { name: 'Молящийся', price: '75 000', desc: '140×70×35 см', img: 'https://cdn.poehali.dev/files/3347e17b-650e-405f-820c-760c6cf5c12e.png' },
-                { name: 'Хранитель', price: '95 000', desc: '160×85×45 см', img: 'https://cdn.poehali.dev/files/3347e17b-650e-405f-820c-760c6cf5c12e.png' },
-                { name: 'Детский', price: '55 000', desc: '100×50×30 см', img: 'https://cdn.poehali.dev/files/3347e17b-650e-405f-820c-760c6cf5c12e.png' },
-                { name: 'Элитный', price: '120 000', desc: '180×90×50 см', img: 'https://cdn.poehali.dev/files/3347e17b-650e-405f-820c-760c6cf5c12e.png' },
-              ].map((item) => (
-                <Card key={item.name} className="hover:shadow-lg transition-shadow overflow-hidden flex flex-col">
-                  <div 
-                    className="aspect-[3/4] bg-white flex items-center justify-center p-4 cursor-pointer"
-                    onClick={() => setSelectedImage({img: item.img, name: item.name})}
-                  >
-                    <img src={item.img} alt={item.name} className="w-full h-full object-contain" />
-                  </div>
-                  <CardContent className="p-3 flex-1 flex flex-col">
-                    <h3 className="text-sm md:text-base font-semibold mb-1 line-clamp-1">{item.name}</h3>
-                    <p className="text-xs text-muted-foreground mb-2 line-clamp-2">{item.desc}</p>
-                    <div className="mt-auto">
-                      <p className="text-sm md:text-lg font-bold text-accent mb-2">от {item.price} ₽</p>
-                      <Button className="w-full text-xs md:text-sm h-8 md:h-10">Подробнее</Button>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </TabsContent>
+              </>
+            )}
           </Tabs>
         </div>
       </section>

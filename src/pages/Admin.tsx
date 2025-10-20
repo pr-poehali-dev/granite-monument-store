@@ -13,8 +13,9 @@ import {
 import ProductCard from '@/components/admin/ProductCard';
 import ProductForm from '@/components/admin/ProductForm';
 import FileUploadSection from '@/components/admin/FileUploadSection';
+import { API_URLS } from '@/config/api';
 
-const API_URL = 'https://functions.poehali.dev/4ae8f9dd-7d22-451b-a800-1c1d18383264';
+const API_URL = API_URLS.products;
 
 interface Product {
   id: number;
