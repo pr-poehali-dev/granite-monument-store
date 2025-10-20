@@ -1,8 +1,12 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
+import { useToast } from '@/hooks/use-toast';
 import Icon from '@/components/ui/icon';
 
 export default function Index() {
@@ -12,6 +16,16 @@ export default function Index() {
   const [selectedSize, setSelectedSize] = useState('medium');
   const [selectedMaterial, setSelectedMaterial] = useState('black-granite');
   const [selectedImage, setSelectedImage] = useState<{img: string, name: string} | null>(null);
+  
+  const [uploadedPhoto, setUploadedPhoto] = useState<string>('');
+  const [uploading, setUploading] = useState(false);
+  const [formData, setFormData] = useState({
+    name: '',
+    phone: '',
+    comment: ''
+  });
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const { toast } = useToast();
 
   const monumentOrientations = [
     { id: 'vertical', name: 'Вертикальные', icon: 'RectangleVertical' },
@@ -53,6 +67,68 @@ export default function Index() {
   const scrollToSection = (section: string) => {
     setActiveSection(section);
     document.getElementById(section)?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const handlePhotoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setUploading(true);
+    
+    try {
+      const formDataUpload = new FormData();
+      formDataUpload.append('file', file);
+
+      const response = await fetch('https://api.poehali.dev/upload', {
+        method: 'POST',
+        body: formDataUpload,
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setUploadedPhoto(data.url);
+        toast({
+          title: 'Успешно!',
+          description: 'Фото загружено',
+        });
+      } else {
+        toast({
+          title: 'Ошибка',
+          description: 'Не удалось загрузить фото',
+          variant: 'destructive',
+        });
+      }
+    } catch (error) {
+      console.error('Upload error:', error);
+      toast({
+        title: 'Ошибка',
+        description: 'Не удалось загрузить фото',
+        variant: 'destructive',
+      });
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  const handleSubmitRetouchRequest = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!uploadedPhoto) {
+      toast({
+        title: 'Внимание',
+        description: 'Пожалуйста, загрузите фото',
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    toast({
+      title: 'Заявка отправлена!',
+      description: 'Мы свяжемся с вами в ближайшее время',
+    });
+
+    setFormData({ name: '', phone: '', comment: '' });
+    setUploadedPhoto('');
   };
 
   return (
@@ -194,7 +270,7 @@ export default function Index() {
           <div className="mt-16 max-w-4xl mx-auto">
             <Card className="bg-muted border-none">
               <CardContent className="p-8">
-                <div className="grid md:grid-cols-3 gap-6 text-center">
+                <div className="grid md:grid-cols-3 gap-6 text-center mb-8">
                   <div>
                     <Icon name="Clock" size={48} className="mx-auto mb-4 text-primary" />
                     <h3 className="text-lg font-semibold mb-2">Быстро</h3>
@@ -211,11 +287,125 @@ export default function Index() {
                     <p className="text-sm text-muted-foreground">С уважением к памяти</p>
                   </div>
                 </div>
-                <div className="mt-8 text-center">
-                  <Button size="lg" className="bg-primary hover:bg-primary/90 text-white px-10">
-                    Заказать ретушь фото
+              </CardContent>
+            </Card>
+          </div>
+
+          <div className="mt-12 max-w-2xl mx-auto">
+            <Card className="border-2 border-primary shadow-xl">
+              <CardContent className="p-8">
+                <h3 className="text-2xl font-bold text-center mb-6 text-secondary">Заказать ретушь фото</h3>
+                <form onSubmit={handleSubmitRetouchRequest} className="space-y-6">
+                  <div>
+                    <Label className="text-base font-semibold mb-3 block">Загрузите фото</Label>
+                    <input
+                      ref={fileInputRef}
+                      type="file"
+                      accept="image/*"
+                      onChange={handlePhotoUpload}
+                      className="hidden"
+                    />
+                    
+                    {uploadedPhoto ? (
+                      <div className="space-y-3">
+                        <div className="aspect-[4/3] bg-gray-100 rounded-lg overflow-hidden border-2 border-border">
+                          <img src={uploadedPhoto} alt="Загруженное фото" className="w-full h-full object-contain" />
+                        </div>
+                        <div className="flex gap-2">
+                          <Button
+                            type="button"
+                            variant="outline"
+                            className="flex-1"
+                            onClick={() => fileInputRef.current?.click()}
+                            disabled={uploading}
+                          >
+                            <Icon name="RefreshCw" size={20} className="mr-2" />
+                            Изменить фото
+                          </Button>
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => setUploadedPhoto('')}
+                          >
+                            <Icon name="Trash2" size={20} />
+                          </Button>
+                        </div>
+                      </div>
+                    ) : (
+                      <Button
+                        type="button"
+                        variant="outline"
+                        className="w-full h-32 border-2 border-dashed border-primary bg-primary/5 hover:bg-primary/10"
+                        onClick={() => fileInputRef.current?.click()}
+                        disabled={uploading}
+                      >
+                        {uploading ? (
+                          <>
+                            <Icon name="Loader2" size={32} className="mr-3 animate-spin text-primary" />
+                            <span className="text-lg">Загрузка...</span>
+                          </>
+                        ) : (
+                          <div className="flex flex-col items-center">
+                            <Icon name="Upload" size={32} className="mb-2 text-primary" />
+                            <span className="text-lg font-semibold">Выбрать фото</span>
+                            <span className="text-sm text-muted-foreground mt-1">с телефона или компьютера</span>
+                          </div>
+                        )}
+                      </Button>
+                    )}
+                  </div>
+
+                  <div>
+                    <Label htmlFor="name" className="text-base font-semibold">Ваше имя *</Label>
+                    <Input
+                      id="name"
+                      value={formData.name}
+                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                      placeholder="Как к вам обращаться?"
+                      required
+                      className="mt-2"
+                    />
+                  </div>
+
+                  <div>
+                    <Label htmlFor="phone" className="text-base font-semibold">Телефон *</Label>
+                    <Input
+                      id="phone"
+                      type="tel"
+                      value={formData.phone}
+                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                      placeholder="+7 (___) ___-__-__"
+                      required
+                      className="mt-2"
+                    />
+                  </div>
+
+                  <div>
+                    <Label htmlFor="comment" className="text-base font-semibold">Комментарий</Label>
+                    <Textarea
+                      id="comment"
+                      value={formData.comment}
+                      onChange={(e) => setFormData({ ...formData, comment: e.target.value })}
+                      placeholder="Опишите пожелания к ретуши (необязательно)"
+                      rows={3}
+                      className="mt-2"
+                    />
+                  </div>
+
+                  <Button 
+                    type="submit" 
+                    size="lg" 
+                    className="w-full bg-primary hover:bg-primary/90 text-white text-lg py-6"
+                  >
+                    <Icon name="Send" size={20} className="mr-2" />
+                    Отправить заявку
                   </Button>
-                </div>
+
+                  <p className="text-sm text-center text-muted-foreground">
+                    Мы свяжемся с вами в течение 30 минут
+                  </p>
+                </form>
               </CardContent>
             </Card>
           </div>
