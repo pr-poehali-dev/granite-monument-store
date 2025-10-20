@@ -62,14 +62,14 @@ export default function Index() {
           <nav className="flex items-center justify-between">
             <h1 className="text-2xl font-bold tracking-tight text-secondary">Гранит Мемориал</h1>
             <div className="hidden md:flex gap-8 text-sm">
-              {['home', 'constructor', 'gallery', 'catalog', 'services', 'about', 'contacts'].map((section) => (
+              {['home', 'retouch', 'gallery', 'catalog', 'services', 'about', 'contacts'].map((section) => (
                 <button
                   key={section}
                   onClick={() => scrollToSection(section)}
                   className="text-foreground hover:text-primary transition-colors font-medium uppercase tracking-wide"
                 >
                   {section === 'home' && 'Главная'}
-                  {section === 'constructor' && 'Конструктор'}
+                  {section === 'retouch' && 'Ретушь'}
                   {section === 'gallery' && 'Галерея'}
                   {section === 'catalog' && 'Каталог'}
                   {section === 'services' && 'Услуги'}
@@ -100,9 +100,9 @@ export default function Index() {
             <Button 
               size="lg" 
               className="bg-primary hover:bg-primary/90 text-white font-semibold px-10 py-6 text-base shadow-lg"
-              onClick={() => scrollToSection('constructor')}
+              onClick={() => scrollToSection('retouch')}
             >
-              Создать памятник онлайн
+              Художественная ретушь
             </Button>
             <Button 
               size="lg" 
@@ -116,152 +116,108 @@ export default function Index() {
         </div>
       </section>
 
-      <section id="constructor" className="py-24 bg-white">
+      <section id="retouch" className="py-24 bg-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-4">
             <div className="w-16 h-1 bg-primary mx-auto mb-6"></div>
           </div>
-          <h2 className="text-4xl md:text-5xl font-bold text-center mb-4 text-secondary">Конструктор памятников</h2>
-          <p className="text-center text-muted-foreground mb-16 text-lg">Создайте уникальный памятник онлайн за несколько минут</p>
+          <h2 className="text-4xl md:text-5xl font-bold text-center mb-4 text-secondary">Художественная ретушь</h2>
+          <p className="text-center text-muted-foreground mb-16 text-lg max-w-3xl mx-auto">
+            Профессиональная обработка старых и повреждённых фотографий для гравировки на памятнике.<br/>
+            Восстановление качества изображения с сохранением индивидуальности.
+          </p>
           
           <div className="grid md:grid-cols-2 gap-12 max-w-6xl mx-auto">
-            <div className="space-y-8 animate-fade-in">
-              <div>
-                <h3 className="text-2xl font-semibold mb-4">Ориентация</h3>
-                <div className="grid grid-cols-2 gap-4">
-                  {monumentOrientations.map((orientation) => (
-                    <Card 
-                      key={orientation.id}
-                      className={`cursor-pointer transition-all hover:shadow-lg border-2 ${
-                        selectedOrientation === orientation.id ? 'border-primary shadow-lg' : 'border-transparent'
-                      }`}
-                      onClick={() => setSelectedOrientation(orientation.id)}
-                    >
-                      <CardContent className="p-6 text-center">
-                        <Icon name={orientation.icon} size={48} className="mx-auto mb-3 text-primary" />
-                        <p className="font-medium">{orientation.name}</p>
-                      </CardContent>
-                    </Card>
-                  ))}
+            <div className="space-y-6">
+              <Card className="overflow-hidden border-2 border-border shadow-lg">
+                <div className="bg-muted py-3 px-6 border-b">
+                  <h3 className="text-xl font-semibold text-center">До ретуши</h3>
                 </div>
-              </div>
-
-              <div>
-                <h3 className="text-2xl font-semibold mb-4">Форма памятника</h3>
-                <div className="grid grid-cols-2 gap-4">
-                  {monumentShapes.map((shape) => (
-                    <Card 
-                      key={shape.id}
-                      className={`cursor-pointer transition-all hover:shadow-lg border-2 ${
-                        selectedShape === shape.id ? 'border-primary shadow-lg' : 'border-transparent'
-                      }`}
-                      onClick={() => setSelectedShape(shape.id)}
-                    >
-                      <CardContent className="p-6 text-center">
-                        <Icon name={shape.icon} size={48} className="mx-auto mb-3 text-primary" />
-                        <p className="font-medium">{shape.name}</p>
-                      </CardContent>
-                    </Card>
-                  ))}
-                </div>
-              </div>
-
-              <div>
-                <h3 className="text-2xl font-semibold mb-4">Размер</h3>
-                <div className="space-y-3">
-                  {monumentSizes.map((size) => (
-                    <Card 
-                      key={size.id}
-                      className={`cursor-pointer transition-all hover:shadow-lg border-2 ${
-                        selectedSize === size.id ? 'border-primary shadow-lg' : 'border-transparent'
-                      }`}
-                      onClick={() => setSelectedSize(size.id)}
-                    >
-                      <CardContent className="p-4 flex justify-between items-center">
-                        <div>
-                          <p className="font-semibold">{size.name}</p>
-                          <p className="text-sm text-muted-foreground">{size.dimensions}</p>
-                        </div>
-                        <p className="text-xl font-bold text-primary">{size.price} ₽</p>
-                      </CardContent>
-                    </Card>
-                  ))}
-                </div>
-              </div>
-
-              <div>
-                <h3 className="text-2xl font-semibold mb-4">Материал</h3>
-                <div className="grid grid-cols-3 gap-4">
-                  {materials.map((material) => (
-                    <Card 
-                      key={material.id}
-                      className={`cursor-pointer transition-all hover:shadow-lg ${
-                        selectedMaterial === material.id ? 'ring-2 ring-accent' : ''
-                      }`}
-                      onClick={() => setSelectedMaterial(material.id)}
-                    >
-                      <CardContent className="p-4 text-center">
-                        <div 
-                          className="w-16 h-16 mx-auto mb-3 rounded-lg shadow-md"
-                          style={{ backgroundColor: material.color }}
-                        />
-                        <p className="text-sm font-medium">{material.name}</p>
-                      </CardContent>
-                    </Card>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            <div className="flex items-center justify-center animate-scale-in">
-              <Card className="w-full max-w-md">
-                <CardContent className="p-8">
-                  <h3 className="text-2xl font-semibold mb-6 text-center">Предварительный просмотр</h3>
-                  <div className="aspect-[3/4] bg-gradient-to-b from-gray-700 to-gray-900 rounded-lg shadow-2xl mb-6 flex items-center justify-center">
-                    <div 
-                      className={`bg-gradient-to-b ${
-                        selectedMaterial === 'black-granite' ? 'from-gray-800 to-gray-950' :
-                        selectedMaterial === 'gray-granite' ? 'from-gray-500 to-gray-700' :
-                        'from-red-900 to-red-950'
-                      } ${
-                        selectedShape === 'classic' ? 'rounded-lg' :
-                        selectedShape === 'arch' ? 'rounded-t-full' :
-                        selectedShape === 'rounded' ? 'rounded-3xl' :
-                        'clip-path-cross'
-                      } ${
-                        selectedOrientation === 'vertical' 
-                          ? selectedSize === 'small' ? 'w-32 h-48' :
-                            selectedSize === 'medium' ? 'w-40 h-56' :
-                            'w-48 h-64'
-                          : selectedSize === 'small' ? 'w-48 h-32' :
-                            selectedSize === 'medium' ? 'w-56 h-40' :
-                            'w-64 h-48'
-                      } shadow-xl transition-all duration-300`}
+                <CardContent className="p-0">
+                  <div className="aspect-[3/4] bg-gray-100 flex items-center justify-center">
+                    <img 
+                      src="https://cdn.poehali.dev/files/1b127b0d-a42c-4b26-93b3-313340fc0512.jpeg" 
+                      alt="Фото до ретуши"
+                      className="w-full h-full object-contain"
                     />
-                  </div>
-                  <div className="space-y-3 text-center">
-                    <p className="text-lg">
-                      <span className="font-semibold">Ориентация:</span> {monumentOrientations.find(o => o.id === selectedOrientation)?.name}
-                    </p>
-                    <p className="text-lg">
-                      <span className="font-semibold">Форма:</span> {monumentShapes.find(s => s.id === selectedShape)?.name}
-                    </p>
-                    <p className="text-lg">
-                      <span className="font-semibold">Размер:</span> {monumentSizes.find(s => s.id === selectedSize)?.name}
-                    </p>
-                    <p className="text-lg">
-                      <span className="font-semibold">Материал:</span> {materials.find(m => m.id === selectedMaterial)?.name}
-                    </p>
-                    <p className="text-3xl font-bold text-primary mt-4">
-                      {monumentSizes.find(s => s.id === selectedSize)?.price} ₽
-                    </p>
-                    <Button className="w-full mt-6 bg-primary hover:bg-primary/90 text-white" size="lg">
-                      Оформить заказ
-                    </Button>
                   </div>
                 </CardContent>
               </Card>
+              <div className="text-center space-y-2">
+                <p className="text-muted-foreground">
+                  <Icon name="X" size={20} className="inline text-red-500 mr-2" />
+                  Старое, выцветшее фото
+                </p>
+                <p className="text-muted-foreground">
+                  <Icon name="X" size={20} className="inline text-red-500 mr-2" />
+                  Царапины и повреждения
+                </p>
+                <p className="text-muted-foreground">
+                  <Icon name="X" size={20} className="inline text-red-500 mr-2" />
+                  Низкое качество изображения
+                </p>
+              </div>
             </div>
+
+            <div className="space-y-6">
+              <Card className="overflow-hidden border-2 border-primary shadow-2xl">
+                <div className="bg-primary py-3 px-6 border-b">
+                  <h3 className="text-xl font-semibold text-center text-white">После ретуши</h3>
+                </div>
+                <CardContent className="p-0">
+                  <div className="aspect-[3/4] bg-black flex items-center justify-center">
+                    <img 
+                      src="https://cdn.poehali.dev/files/853c0cdf-e67b-4ad8-a154-376920e10e91.jpeg" 
+                      alt="Фото после ретуши"
+                      className="w-full h-full object-contain"
+                    />
+                  </div>
+                </CardContent>
+              </Card>
+              <div className="text-center space-y-2">
+                <p className="text-muted-foreground">
+                  <Icon name="Check" size={20} className="inline text-primary mr-2" />
+                  Восстановлены детали лица
+                </p>
+                <p className="text-muted-foreground">
+                  <Icon name="Check" size={20} className="inline text-primary mr-2" />
+                  Удалены повреждения
+                </p>
+                <p className="text-muted-foreground">
+                  <Icon name="Check" size={20} className="inline text-primary mr-2" />
+                  Профессиональное качество
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-16 max-w-4xl mx-auto">
+            <Card className="bg-muted border-none">
+              <CardContent className="p-8">
+                <div className="grid md:grid-cols-3 gap-6 text-center">
+                  <div>
+                    <Icon name="Clock" size={48} className="mx-auto mb-4 text-primary" />
+                    <h3 className="text-lg font-semibold mb-2">Быстро</h3>
+                    <p className="text-sm text-muted-foreground">Обработка фото за 1-2 дня</p>
+                  </div>
+                  <div>
+                    <Icon name="Shield" size={48} className="mx-auto mb-4 text-primary" />
+                    <h3 className="text-lg font-semibold mb-2">Качественно</h3>
+                    <p className="text-sm text-muted-foreground">Профессиональные художники</p>
+                  </div>
+                  <div>
+                    <Icon name="Heart" size={48} className="mx-auto mb-4 text-primary" />
+                    <h3 className="text-lg font-semibold mb-2">Бережно</h3>
+                    <p className="text-sm text-muted-foreground">С уважением к памяти</p>
+                  </div>
+                </div>
+                <div className="mt-8 text-center">
+                  <Button size="lg" className="bg-primary hover:bg-primary/90 text-white px-10">
+                    Заказать ретушь фото
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </section>
