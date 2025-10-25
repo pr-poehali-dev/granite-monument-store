@@ -111,34 +111,30 @@ export default function Index() {
     setUploading(true);
     
     try {
-      const formDataUpload = new FormData();
-      formDataUpload.append('file', file);
-
-      console.log('Sending request to upload API...');
-      const response = await fetch('https://api.poehali.dev/upload', {
-        method: 'POST',
-        body: formDataUpload,
-      });
-
-      console.log('Upload response status:', response.status);
+      const reader = new FileReader();
       
-      if (response.ok) {
-        const data = await response.json();
-        console.log('Upload successful, URL:', data.url);
-        setUploadedPhoto(data.url);
+      reader.onload = async (event) => {
+        const dataUrl = event.target?.result as string;
+        console.log('File read as data URL, length:', dataUrl.length);
+        setUploadedPhoto(dataUrl);
         toast({
           title: 'Успешно!',
           description: 'Фото загружено',
         });
-      } else {
-        const errorText = await response.text();
-        console.error('Upload failed with status:', response.status, errorText);
+        setUploading(false);
+      };
+      
+      reader.onerror = () => {
+        console.error('FileReader error');
         toast({
           title: 'Ошибка',
           description: 'Не удалось загрузить фото',
           variant: 'destructive',
         });
-      }
+        setUploading(false);
+      };
+      
+      reader.readAsDataURL(file);
     } catch (error) {
       console.error('Upload error:', error);
       toast({
@@ -146,7 +142,6 @@ export default function Index() {
         description: 'Не удалось загрузить фото',
         variant: 'destructive',
       });
-    } finally {
       setUploading(false);
     }
   };
