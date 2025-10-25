@@ -144,7 +144,7 @@ export default function Index() {
     }
   };
 
-  const handleSubmitRetouchRequest = (e: React.FormEvent) => {
+  const handleSubmitRetouchRequest = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!uploadedPhoto) {
@@ -156,13 +156,42 @@ export default function Index() {
       return;
     }
 
-    toast({
-      title: 'Заявка отправлена!',
-      description: 'Мы свяжемся с вами в ближайшее время',
-    });
+    try {
+      const response = await fetch(API_URLS.sendToTelegram, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          photo_url: uploadedPhoto,
+          name: formData.name,
+          phone: formData.phone,
+          comment: formData.comment,
+        }),
+      });
 
-    setFormData({ name: '', phone: '', comment: '' });
-    setUploadedPhoto('');
+      if (response.ok) {
+        toast({
+          title: 'Заявка отправлена!',
+          description: 'Мы свяжемся с вами в ближайшее время',
+        });
+        setFormData({ name: '', phone: '', comment: '' });
+        setUploadedPhoto('');
+      } else {
+        toast({
+          title: 'Ошибка',
+          description: 'Не удалось отправить заявку',
+          variant: 'destructive',
+        });
+      }
+    } catch (error) {
+      console.error('Send error:', error);
+      toast({
+        title: 'Ошибка',
+        description: 'Не удалось отправить заявку',
+        variant: 'destructive',
+      });
+    }
   };
 
   return (
