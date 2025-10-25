@@ -107,25 +107,32 @@ export default function Index() {
     const file = e.target.files?.[0];
     if (!file) return;
 
+    console.log('Starting upload for file:', file.name, file.type, file.size);
     setUploading(true);
     
     try {
       const formDataUpload = new FormData();
       formDataUpload.append('file', file);
 
+      console.log('Sending request to upload API...');
       const response = await fetch('https://api.poehali.dev/upload', {
         method: 'POST',
         body: formDataUpload,
       });
 
+      console.log('Upload response status:', response.status);
+      
       if (response.ok) {
         const data = await response.json();
+        console.log('Upload successful, URL:', data.url);
         setUploadedPhoto(data.url);
         toast({
           title: 'Успешно!',
           description: 'Фото загружено',
         });
       } else {
+        const errorText = await response.text();
+        console.error('Upload failed with status:', response.status, errorText);
         toast({
           title: 'Ошибка',
           description: 'Не удалось загрузить фото',
