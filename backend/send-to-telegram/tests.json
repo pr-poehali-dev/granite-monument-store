@@ -1,0 +1,19 @@
+{
+  "tests": [
+    {
+      "name": "Test sending photo to Telegram",
+      "method": "POST",
+      "body": {
+        "photo_url": "https://cdn.poehali.dev/projects/a972bc37-a8fd-483e-b573-f52aa6f2509f/files/43d25b10-876c-4b04-ac32-2196ee65ed01.jpg",
+        "name": "Тестовый клиент",
+        "phone": "+7 999 123-45-67",
+        "comment": "Это тестовая заявка"
+      },
+      "expectedStatus": 200,
+      "expectedBody": {
+        "success": true
+      },
+      "bodyMatcher": "partial"
+    }
+  ]
+}
