@@ -85,24 +85,44 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         method='POST'
     )
     
-    with urllib.request.urlopen(req) as response:
-        telegram_response = json.loads(response.read().decode('utf-8'))
+    try:
+        with urllib.request.urlopen(req) as response:
+            telegram_response = json.loads(response.read().decode('utf-8'))
+            
+            if telegram_response.get('ok'):
+                return {
+                    'statusCode': 200,
+                    'headers': {
+                        'Content-Type': 'application/json',
+                        'Access-Control-Allow-Origin': '*'
+                    },
+                    'body': json.dumps({'success': True, 'message': 'Sent to Telegram'})
+                }
+            else:
+                return {
+                    'statusCode': 500,
+                    'headers': {
+                        'Content-Type': 'application/json',
+                        'Access-Control-Allow-Origin': '*'
+                    },
+                    'body': json.dumps({'error': 'Telegram API error', 'details': telegram_response})
+                }
+    except urllib.error.HTTPError as e:
+        error_body = e.read().decode('utf-8')
+        try:
+            error_json = json.loads(error_body)
+        except:
+            error_json = {'raw_error': error_body}
         
-        if telegram_response.get('ok'):
-            return {
-                'statusCode': 200,
-                'headers': {
-                    'Content-Type': 'application/json',
-                    'Access-Control-Allow-Origin': '*'
-                },
-                'body': json.dumps({'success': True, 'message': 'Sent to Telegram'})
-            }
-        else:
-            return {
-                'statusCode': 500,
-                'headers': {
-                    'Content-Type': 'application/json',
-                    'Access-Control-Allow-Origin': '*'
-                },
-                'body': json.dumps({'error': 'Telegram API error', 'details': telegram_response})
-            }
+        return {
+            'statusCode': 500,
+            'headers': {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*'
+            },
+            'body': json.dumps({
+                'error': f'Telegram HTTP Error {e.code}',
+                'details': error_json,
+                'hint': 'Проверьте токен бота и chat_id' if e.code == 401 else 'Проверьте chat_id' if e.code == 400 else None
+            })
+        }
