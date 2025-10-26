@@ -62,48 +62,47 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
                 'Content-Type': 'application/json',
                 'Access-Control-Allow-Origin': '*'
             },
-            'body': json.dumps({'error': 'Telegram credentials not configured'})
+            'body': json.dumps({
+                'error': 'Telegram credentials not configured',
+                'has_token': bool(bot_token),
+                'has_chat_id': bool(chat_id)
+            })
         }
     
     caption = f"🖼 Новая заявка на ретушь\n\n👤 Имя: {name}\n📞 Телефон: {phone}\n💬 Комментарий: {comment}"
     
     url = f"https://api.telegram.org/bot{bot_token}/sendPhoto"
-    data = urllib.parse.urlencode({
+    payload = json.dumps({
         'chat_id': chat_id,
         'photo': photo_url,
         'caption': caption
     }).encode('utf-8')
     
-    req = urllib.request.Request(url, data=data, method='POST')
+    req = urllib.request.Request(
+        url,
+        data=payload,
+        headers={'Content-Type': 'application/json'},
+        method='POST'
+    )
     
-    try:
-        with urllib.request.urlopen(req) as response:
-            telegram_response = json.loads(response.read().decode('utf-8'))
-            
-            if telegram_response.get('ok'):
-                return {
-                    'statusCode': 200,
-                    'headers': {
-                        'Content-Type': 'application/json',
-                        'Access-Control-Allow-Origin': '*'
-                    },
-                    'body': json.dumps({'success': True, 'message': 'Sent to Telegram'})
-                }
-            else:
-                return {
-                    'statusCode': 500,
-                    'headers': {
-                        'Content-Type': 'application/json',
-                        'Access-Control-Allow-Origin': '*'
-                    },
-                    'body': json.dumps({'error': 'Telegram API error', 'details': telegram_response})
-                }
-    except Exception as e:
-        return {
-            'statusCode': 500,
-            'headers': {
-                'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*'
-            },
-            'body': json.dumps({'error': str(e)})
-        }
+    with urllib.request.urlopen(req) as response:
+        telegram_response = json.loads(response.read().decode('utf-8'))
+        
+        if telegram_response.get('ok'):
+            return {
+                'statusCode': 200,
+                'headers': {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*'
+                },
+                'body': json.dumps({'success': True, 'message': 'Sent to Telegram'})
+            }
+        else:
+            return {
+                'statusCode': 500,
+                'headers': {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*'
+                },
+                'body': json.dumps({'error': 'Telegram API error', 'details': telegram_response})
+            }
